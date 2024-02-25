@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.clipg.mapper.OrderMapper">
+    <!--查-->
+    <!--查看所有-->
+    <select id="selectAll" resultType="com.clipg.pojo.Order">
+        select order_id    as orderId,
+               goods_name  as goodsName,
+               order_num   as orderNum,
+               order_time  as orderTime,
+               order_price as orderPrice
+        from order_management.orders
+    </select>
+    <select id="selectAllDateDESC" resultType="com.clipg.pojo.Order">
+        select order_id    as orderId,
+               goods_name  as goodsName,
+               order_num   as orderNum,
+               order_time  as orderTime,
+               order_price as orderPrice
+        from order_management.orders
+        order by orderTime DESC
+    </select>
+    <select id="selectAllDateASC" resultType="com.clipg.pojo.Order">
+        select order_id    as orderId,
+               goods_name  as goodsName,
+               order_num   as orderNum,
+               order_time  as orderTime,
+               order_price as orderPrice
+        from order_management.orders
+        order by orderTime ASC
+    </select>
+    <select id="selectAllIdDESC" resultType="com.clipg.pojo.Order">
+        select order_id    as orderId,
+               goods_name  as goodsName,
+               order_num   as orderNum,
+               order_time  as orderTime,
+               order_price as orderPrice
+        from order_management.orders
+        order by orderId DESC
+    </select>
+    <!--查看指定-->
+    <select id="selectByid" resultType="com.clipg.pojo.Order">
+        select order_id    as orderId,
+               goods_name  as goodsName,
+               order_num   as orderNum,
+               order_time  as orderTime,
+               order_price as orderPrice
+        from order_management.orders
+        where order_id = #{id};
+    </select>
+    <!--动态条件查询-->
+    <select id="selectByDynamicCondition" resultType="com.clipg.pojo.Order">
+        select order_id as orderId,goods_name as goodsName,order_num as orderNum,order_time as orderTime,order_price as
+        orderPrice
+        from order_management.orders
+        <where>
+            <if test="goodsName != null and goodsName != ''">
+                and goods_name like #{goodsName}
+            </if>
+            <if test="orderNum != null ">
+                and order_num like #{orderNum}
+            </if>
+            <if test="orderTime != null ">
+                and order_time like #{orderTime}
+            </if>
+            <if test="orderPrice != null ">
+                and order_price like #{orderPrice}
+            </if>
+        </where>
+    </select>
+
+
+    <!--改-->
+    <!--动态修改-->
+    <update id="updateDynamic">
+        update order_management.orders
+        <set>
+            <if test="goodsName!=null and goodsName != ''">
+                goods_name = #{goodsName},
+            </if>
+            <if test="orderNum != null ">
+                order_num = #{orderNum},
+            </if>
+            <if test="orderTime != null">
+                order_time = #{orderTime},
+            </if>
+            <if test="orderPrice != null">
+                order_price = #{orderPrice},
+            </if>
+        </set>
+        where order_id = #{orderId};
+    </update>
+
+
+    <!--增-->
+    <insert id="insertOrder">
+        insert into order_management.orders (order_id, goods_name, order_num, order_time, order_price)
+        values (#{orderId}, #{goodsName}, #{orderNum}, #{orderTime}, #{orderPrice})
+    </insert>
+
+
+    <!--删-->
+    <!--删除指定-->
+    <delete id="deleteById">
+        delete
+        from order_management.orders
+        where order_id = #{id};
+    </delete>
+    <!--批量删除-->
+    <delete id="deleteByIds">
+        delete from order_management.orders where order_id
+        in (
+        <foreach collection="orderIds" item="orderId" separator=",">
+            #{orderId}
+        </foreach>
+        )
+    </delete>
+
+</mapper>

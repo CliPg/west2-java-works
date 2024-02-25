@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!--会给pojo下的所有实体类取别名，默认该类名不区分大小写-->
+    <typeAliases>
+        <package name="com.clipg.pojo"/>
+    </typeAliases>
+
+    <!--通过default属性切换不同的environment-->
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <!--数据库连接信息-->
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="url"
+                          value="jdbc:mysql://localhost:3306/jdbcstudy?useUnicode=true&amp;useUnicode=true&amp;characterEncoding=UTF-8"/>
+                <!--<property name="url" value="jdbc:mysql://localhost:3306/mybatis?useUnicode=true&amp;useUnicode=true&amp;characterEncoding=UTF-8"/>-->
+                <property name="url"
+                          value="jdbc:mysql://localhost:3306/order_management?useUnicode=true&amp;useUnicode=true&amp;characterEncoding=UTF-8"/>
+                <property name="username" value="root"/>
+                <property name="password" value="LHSqaz123"/>
+            </dataSource>
+        </environment>
+
+        <!--配置不同的环境可以连接不同的数据库-->
+    </environments>
+    <!-- 每一个Mapper.XML都需要在Mybatis注册-->
+    <mappers>
+        <!--加载sql映射文件-->
+        <mapper resource="com/clipg/mapper/OrderMapper.xml"/>
+        <mapper resource="com/clipg/mapper/GoodsMapper.xml"/>
+        <!--<package name="com.clipg.mapper"/>-->
+    </mappers>
+</configuration>

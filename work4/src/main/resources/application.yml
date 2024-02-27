@@ -3,5 +3,5 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306
     username: root
-    password: LHSqaz123
+    password: 123
     type: com.alibaba.druid.pool.DruidDataSource

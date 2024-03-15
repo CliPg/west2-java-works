@@ -1,19 +1,18 @@
 package com.clipg.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.clipg.domain.ResponseResult;
 import com.clipg.domain.User;
 
+public interface UserService extends IService<User> {
 
-import java.util.List;
+    ResponseResult login(User user);
 
-public interface UserService {
+    ResponseResult register(User user);
 
-    public void save(User user);
+    ResponseResult info(String id);
 
-    public void update(User user);
+    ResponseResult avatarUpload(String token, String avatarUrl);
+    boolean getUserByUsername(String username);
 
-    public void delete(String id);
-
-    public User getById(String id);
-
-    public List<User> listUser();
 }

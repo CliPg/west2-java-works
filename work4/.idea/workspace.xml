@@ -4,62 +4,225 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="96ba1d36-8d88-4d77-896c-bfb68b5ae0c0" name="更改" comment="" />
+    <list default="true" id="896b3186-577b-4afd-a188-9522dc10e265" name="更改" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a324876e-ac85-499d-8812-b342a6ae8ab8.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a324876e-ac85-499d-8812-b342a6ae8ab8/storage_v2/_src_/schema/bullet_screen_video_website.YaHM5Q.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a324876e-ac85-499d-8812-b342a6ae8ab8/storage_v2/_src_/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a324876e-ac85-499d-8812-b342a6ae8ab8/storage_v2/_src_/schema/mysql.osA4Bg.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a324876e-ac85-499d-8812-b342a6ae8ab8/storage_v2/_src_/schema/performance_schema.kIw0nw.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a324876e-ac85-499d-8812-b342a6ae8ab8/storage_v2/_src_/schema/sys.zb4BAA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/controller/InteractionController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/controller/SocialController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/controller/UserController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/controller/VideoController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/dao/CommentDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/dao/InteractionDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/dao/UserDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/dao/VideoDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/domain/Comment.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/domain/Friend.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/domain/Like.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/domain/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/domain/Video.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/service/InteractionService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/service/SocialService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/service/UserService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/service/VideoService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/service/impl/InteractionServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/service/impl/SocialServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/service/impl/UserServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/service/impl/VideoServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/clipg/Work4ApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/clipg/Work4ApplicationTests.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="MarkdownSettingsMigration">
-    <option name="stateVersion" value="1" />
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 1
-}]]></component>
-  <component name="ProjectId" id="2crgf4sF2oF2SQabOGeHgP0l8Ra" />
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2d8auUPoMsrTwNbQPgTPnIogsxA" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "D:/cs学习/JAVA/SpringBoot",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/cs学习/JAVA/SpringSecurity/SpringSecurity_08/src/main/java/com/clipg/controller&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;34bde5322f33f04bac567e6a889da99f&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
-  <component name="RunManager">
-    <configuration name="Work4Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+}</component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\cs学习\JAVA\SpringSecurity\SpringSecurity_08\src\main\java\com\clipg\controller" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.clipg.controller" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.Work4Application">
+    <configuration name="JwtUtil" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.clipg.util.JwtUtil" />
       <module name="work4" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.clipg.work4.Work4Application" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.clipg.util.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Work4ApplicationTests.test (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="work4" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.clipg.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.clipg" />
+      <option name="MAIN_CLASS_NAME" value="com.clipg.Work4ApplicationTests" />
+      <option name="METHOD_NAME" value="test" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Work4ApplicationTests.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="work4" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.clipg.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.clipg" />
+      <option name="MAIN_CLASS_NAME" value="com.clipg.Work4ApplicationTests" />
+      <option name="METHOD_NAME" value="test" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Work4ApplicationTests.testGetService" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="work4" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.clipg.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.clipg" />
+      <option name="MAIN_CLASS_NAME" value="com.clipg.Work4ApplicationTests" />
+      <option name="METHOD_NAME" value="testGetService" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Work4Application (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="work4" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.clipg.Work4Application" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.clipg.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Work4Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="work4" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.clipg.Work4Application" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.Work4Application (1)" />
+        <item itemvalue="JUnit.Work4ApplicationTests.test (1)" />
+        <item itemvalue="JUnit.Work4ApplicationTests.test" />
+        <item itemvalue="应用程序.JwtUtil" />
+        <item itemvalue="JUnit.Work4ApplicationTests.testGetService" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="默认任务">
-      <changelist id="96ba1d36-8d88-4d77-896c-bfb68b5ae0c0" name="更改" comment="" />
-      <created>1708875224509</created>
+      <changelist id="896b3186-577b-4afd-a188-9522dc10e265" name="更改" comment="" />
+      <created>1709392384557</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1708875224509</updated>
-      <workItem from="1708875225606" duration="322000" />
+      <updated>1709392384557</updated>
+      <workItem from="1709392385558" duration="21906000" />
+      <workItem from="1709483161136" duration="788000" />
+      <workItem from="1709656141476" duration="26007000" />
+      <workItem from="1709813847287" duration="29488000" />
+      <workItem from="1710165911055" duration="8510000" />
+      <workItem from="1710229107831" duration="731000" />
+      <workItem from="1710479392022" duration="739000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.StackOverflowError" package="java.lang" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

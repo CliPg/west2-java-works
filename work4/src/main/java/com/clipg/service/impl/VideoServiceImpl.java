@@ -43,7 +43,7 @@ public class VideoServiceImpl extends ServiceImpl<VideoDao, Video> implements Vi
      */
     @Override
     public ResponseResult publish(String token, Video video) {
-        boolean flag = false;
+
         try {
             Date date = new Date();
             String userId;
@@ -59,12 +59,14 @@ public class VideoServiceImpl extends ServiceImpl<VideoDao, Video> implements Vi
             uploadVideo.setDescription(video.getDescription());
             uploadVideo.setCreateTime(date);
             videoDao.insert(uploadVideo);
-            flag = true;
+
         } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            return flag ? new ResponseResult(200, "上传成功！") : new ResponseResult(-1, "上传失败！");
+            e.printStackTrace();
+            return new ResponseResult(-1, "上传失败！");
         }
+
+        return new ResponseResult(200, "上传成功！");
+
     }
 
     /**
@@ -77,7 +79,7 @@ public class VideoServiceImpl extends ServiceImpl<VideoDao, Video> implements Vi
      */
     @Override
     public ResponseResult list(String userId, int pageNum, int pageSize) {
-        boolean flag = false;
+
         String data = null;
         try {
             IPage page = new Page(pageNum, pageSize);
@@ -90,19 +92,28 @@ public class VideoServiceImpl extends ServiceImpl<VideoDao, Video> implements Vi
             if (items.isEmpty()) {
                 data = "该用户还未过发表视频！";
             }
-            flag = true;
+
         } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            return flag ? new ResponseResult(200, "查询成功！", data) : new ResponseResult(-1, "查询失败！");
+            e.printStackTrace();
+            return new ResponseResult(-1, "查询失败！");
         }
+
+        return new ResponseResult(200, "查询成功！", data);
+
 
     }
 
+    /**
+     * 根据关键字搜索视频
+     * @param keywords
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
     @Override
     public ResponseResult search(String keywords, int pageNum, int pageSize) {
 
-        boolean flag = false;
+
         String data = null;
         try {
             IPage page = new Page(pageNum, pageSize);
@@ -115,18 +126,26 @@ public class VideoServiceImpl extends ServiceImpl<VideoDao, Video> implements Vi
             if (items.isEmpty()) {
                 data = "暂无相关视频！";
             }
-            flag = true;
+
         } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            return flag ? new ResponseResult(200, "查询成功！", data) : new ResponseResult(-1, "查询失败！");
+            e.printStackTrace();
+            return new ResponseResult(-1, "查询失败！");
         }
+
+        return new ResponseResult(200, "查询成功！", data);
+
     }
 
+    /**
+     * 查询播放量排行榜
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
     @Override
     public ResponseResult popular(int pageNum, int pageSize) {
 
-        boolean flag = false;
+
         String redisHost = "localhost";
         int redisPort = 6379;
         String data = null;
@@ -163,16 +182,15 @@ public class VideoServiceImpl extends ServiceImpl<VideoDao, Video> implements Vi
             data = "items:" + videoList  + ", total:" + total;
 
 
-            flag = true;
-
         } catch (Exception e) {
             e.printStackTrace();
+            return new ResponseResult(-1, "查询失败！");
         } finally {
             // 关闭 Jedis 连接池
             jedisPool.close();
-
-            return flag ? new ResponseResult(200, "查询成功！",data) : new ResponseResult(-1, "查询失败！");
         }
+
+        return new ResponseResult(200, "查询成功！",data);
 
 
 

@@ -32,9 +32,16 @@ public class InteractionServiceImpl implements InteractionService {
     @Resource
     StringRedisTemplate stringRedisTemplate;
 
+    /**
+     * 对视频进行点赞/取赞
+     * @param actionType
+     * @param videoId
+     * @param token
+     * @return
+     */
     @Override
     public ResponseResult like(String actionType, String videoId, String token) {
-        boolean flag = false;
+
         try {
             //获取登录用户
             Claims claims = JwtUtil.parseJWT(token);
@@ -47,24 +54,27 @@ public class InteractionServiceImpl implements InteractionService {
                 if (isSuccess){
                     stringRedisTemplate.opsForSet().add(key, userId.toString());
                 }
-                flag = true;
+
             }else if (!BooleanUtils.isFalse(isMember) && "2".equals(actionType)) {
                 boolean isSuccess = videoService.update().setSql("like_count = like_count - 1").eq("id", videoId).update();
                 if (isSuccess){
                     stringRedisTemplate.opsForSet().remove(key, userId.toString());
                 }
-                flag = true;
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            return flag ? new ResponseResult(200, "操作成功！") : new ResponseResult(-1, "操作失败！");
+            e.printStackTrace();
+            return new ResponseResult(-1, "操作失败！");
         }
+        return  new ResponseResult(200, "操作成功！");
     }
 
+    /**
+     * 返回指定用户点赞的视频
+     * @param userId
+     * @return
+     */
     @Override
     public ResponseResult likeList(String userId) {
-        boolean flag = false;
         String data = null;
         try {
             String keyPattern = "videoId:*:likes";
@@ -86,18 +96,25 @@ public class InteractionServiceImpl implements InteractionService {
                 }
             }
             data = "items:" + videos;
-            flag = true;
         } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            return flag ? new ResponseResult(200, "查询成功！", data) : new ResponseResult(-1, "查询失败！");
-
+            e.printStackTrace();
+            return new ResponseResult(-1, "查询失败！");
         }
+        return new ResponseResult(200, "查询成功！", data);
+
+
     }
 
+    /**
+     * 对视频进行评论
+     * @param token
+     * @param videoId
+     * @param content
+     * @return
+     */
     @Override
     public ResponseResult commentPublish(String token, String videoId, String content) {
-        boolean flag = false;
+
         try {
             // 获取登录用户
             Claims claims = JwtUtil.parseJWT(token);
@@ -116,18 +133,24 @@ public class InteractionServiceImpl implements InteractionService {
             // 添加评论到有序集合中，使用时间戳作为分数
             stringRedisTemplate.opsForZSet().add(key, commentInfo, timestamp);
 
-            flag = true;
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            return new ResponseResult(-1, "评论失败！");
         } finally {
-            return flag ? new ResponseResult(200, "评论成功！") : new ResponseResult(-1, "评论失败！");
+            return new ResponseResult(200, "评论成功！");
         }
     }
 
+    /**
+     * 获取视频的评论列表
+     * @param videoId
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
     @Override
     public ResponseResult commentList(String videoId, int pageNum, int pageSize) {
 
-        boolean flag = false;
         String data = null;
         String redisHost = "localhost";
         int redisPort = 6379;
@@ -148,14 +171,23 @@ public class InteractionServiceImpl implements InteractionService {
                 commentList.add(comment);
             }
             data = "items:" + commentList;
-            flag = true;
+
         } catch (Exception e) {
-            throw new RuntimeException("获取视频评论失败！", e);
-        } finally {
-            return flag ? new ResponseResult(200, "查询成功！", data) : new ResponseResult(-1, "查询失败！");
+            e.printStackTrace();
+            return new ResponseResult(-1, "查询失败！");
         }
+
+        return new ResponseResult(200, "查询成功！", data);
+
     }
 
+    /**
+     * 用户删除自己已发表的评论
+     * @param token
+     * @param videoId
+     * @param comment
+     * @return
+     */
     @Override
     public ResponseResult commentDelete(String token, String videoId, String comment) {
         try {

@@ -14,7 +14,7 @@ public class VideoController {
     @Autowired
     private VideoService videoService;
 
-    @RequestMapping("/publish")
+    @PostMapping("/publish")
     public ResponseResult publish(@RequestBody Video video,
                                   @RequestHeader("token") String token){
         return videoService.publish(token, video);

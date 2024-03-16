@@ -38,7 +38,7 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
      */
     @Override
     public ResponseResult login(User user) {
-        boolean flag = false;
+
         HashMap<String, String> map = null;
         try {
             // AuthenticationManager的authenticate方法进行用户认证
@@ -61,12 +61,12 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
             //// 把token响应给前端
             map = new HashMap<>();
             map.put("token", jwt);
-            flag = true;
         } catch (RuntimeException e) {
-            throw new RuntimeException(e);
-        } finally {
-            return flag ? new ResponseResult(200, "登录成功！", map) : new ResponseResult(-1, "登录失败！");
+            e.printStackTrace();
+            return new ResponseResult(-1, "登录失败！");
         }
+
+        return  new ResponseResult(200, "登录成功！", map);
 
 
     }
@@ -78,64 +78,73 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
      */
     @Override
     public ResponseResult register(User registierUser) {
-        boolean flag = false;
+
         try {
             User user = new User();
             Date date = new Date();
+            //保证用户名唯一
             if (getUserByUsername(registierUser.getUsername())){
-                flag = false;
+                return new ResponseResult(-1, "用户名已被注册！");
             }
+            //用户信息
             user.setUsername(registierUser.getUsername());
             user.setPassword(registierUser.getPassword());
             user.setCreateTime(date);
             userDao.insert(user);
             String id = user.getId().toString();
             redisCache.setCacheObject("register:" + id, user);
-            flag = true;
+
         } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            return flag ? new ResponseResult(200, "注册成功！") : new ResponseResult(-1, "注册失败！");
+            e.printStackTrace();
+            return new ResponseResult(-1, "注册失败！");
         }
+
+        return new ResponseResult(200, "注册成功！");
+
     }
 
     /**
-     *
+     *查询用户信息
      * @param id
      * @return
      */
     @Override
     public ResponseResult info(String id) {
-        boolean flag = false;
+
         String data = null;
         try {
+            //根据id
             QueryWrapper<User> queryWrapper = new QueryWrapper<>();
             queryWrapper.eq("id", id);
             User user = userDao.selectOne(queryWrapper);
             if (user != null){
-                flag = true;
                 data = user.toString();
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            return new ResponseResult(-1, "查询失败！");
         } finally {
-            return flag ? new ResponseResult(200, "查询成功！", data) : new ResponseResult(-1, "查询失败！");
+            return  new ResponseResult(200, "查询成功！", data);
         }
 
     }
 
+    /**
+     * 上传头像
+     * @param token
+     * @param avatarUrl
+     * @return
+     */
     @Override
     public ResponseResult avatarUpload(String token, String avatarUrl) {
-        boolean flag = false;
+
         try {
+            //从token中获取用户id
             String id;
             Claims claims = JwtUtil.parseJWT(token);
-            System.out.println(claims);
             id = claims.getSubject();
             System.out.println(id);
-            //QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-            //queryWrapper.eq("id", id);
-            //User user = userDao.selectOne(queryWrapper);
+            //上传头像
             UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
             updateWrapper.eq("id", id);
             User user = new User();
@@ -143,12 +152,14 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
             user.setAvatarUrl(avatarUrl);
             user.setUpdateTime(date);
             userDao.update(user,updateWrapper);
-            flag = true;
+
         } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            return flag ? new ResponseResult(200, "上传成功！") : new ResponseResult(-1, "上传失败！");
+            e.printStackTrace();
+            return new ResponseResult(-1, "上传失败！");
         }
+
+        return  new ResponseResult(200, "上传成功！");
+
 
 
     }

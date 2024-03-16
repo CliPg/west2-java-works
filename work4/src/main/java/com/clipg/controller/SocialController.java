@@ -30,7 +30,7 @@ public class SocialController {
     public ResponseResult followerList(@RequestParam("userId") String userId,
                                         @RequestParam("pageNum") int pageNum,
                                         @RequestParam("pageSize") int pageSize){
-        return socialService.followingList(userId, pageNum, pageSize);
+        return socialService.followerList(userId, pageNum, pageSize);
     }
 
     @GetMapping("/friends/list")

@@ -9,12 +9,14 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 import com.clipg.dao.VideoDao;
+import com.clipg.domain.Datas;
 import com.clipg.domain.ResponseResult;
 
 import com.clipg.domain.Video;
 import com.clipg.service.VideoService;
 import com.clipg.util.FastJsonRedisSerializer;
 import com.clipg.util.JwtUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -80,7 +82,7 @@ public class VideoServiceImpl extends ServiceImpl<VideoDao, Video> implements Vi
     @Override
     public ResponseResult list(String userId, int pageNum, int pageSize) {
 
-        String data = null;
+        Datas data = new Datas<>();
         try {
             IPage page = new Page(pageNum, pageSize);
             LambdaQueryWrapper<Video> lqw = new LambdaQueryWrapper<>();
@@ -88,9 +90,11 @@ public class VideoServiceImpl extends ServiceImpl<VideoDao, Video> implements Vi
             videoDao.selectPage(page, lqw);
             int total = (int) page.getTotal();
             List items = page.getRecords();
-            data = "items:" + items + ", total:" + total;
+            //data = "items:" + items + ", total:" + total;
+            data.setItems(items);
+            data.setTotal(total);
             if (items.isEmpty()) {
-                data = "该用户还未过发表视频！";
+                return new ResponseResult(-1, "该用户还未过发表视频！");
             }
 
         } catch (Exception e) {
@@ -114,7 +118,7 @@ public class VideoServiceImpl extends ServiceImpl<VideoDao, Video> implements Vi
     public ResponseResult search(String keywords, int pageNum, int pageSize) {
 
 
-        String data = null;
+        Datas data = new Datas<>();
         try {
             IPage page = new Page(pageNum, pageSize);
             LambdaQueryWrapper<Video> lqw = new LambdaQueryWrapper<>();
@@ -122,9 +126,11 @@ public class VideoServiceImpl extends ServiceImpl<VideoDao, Video> implements Vi
             videoDao.selectPage(page, lqw);
             List items = page.getRecords();
             int total = (int) page.getTotal();
-            data = "items:" + items + ", total:" + total;
+            //data = "items:" + items + ", total:" + total;
+            data.setItems(items);
+            data.setTotal(total);
             if (items.isEmpty()) {
-                data = "暂无相关视频！";
+                return new ResponseResult(-1, "暂无相关视频！");
             }
 
         } catch (Exception e) {
@@ -145,10 +151,10 @@ public class VideoServiceImpl extends ServiceImpl<VideoDao, Video> implements Vi
     @Override
     public ResponseResult popular(int pageNum, int pageSize) {
 
-
+        List<Video> videoList = new ArrayList<>();
         String redisHost = "localhost";
         int redisPort = 6379;
-        String data = null;
+        Datas data =new Datas<>();
         // 创建 Jedis 连接池配置
         JedisPoolConfig poolConfig = new JedisPoolConfig();
         JedisPool jedisPool = new JedisPool(poolConfig, redisHost, redisPort);
@@ -170,7 +176,7 @@ public class VideoServiceImpl extends ServiceImpl<VideoDao, Video> implements Vi
 
             //获取指定页排行榜数据
             List<Tuple> leaderboardPage =  jedis.zrevrangeWithScores(leaderboardKey, (pageNum-1) * pageSize, pageNum * pageSize - 1);
-            List<Video> videoList = new ArrayList<>();
+            //List<Video> videoList = new ArrayList<>();
             for (Tuple tuple : leaderboardPage) {
                 String videoId = tuple.getElement();
                 QueryWrapper queryWrapper = new QueryWrapper<>();
@@ -179,8 +185,8 @@ public class VideoServiceImpl extends ServiceImpl<VideoDao, Video> implements Vi
                 videoList.add(video);
             }
             int total = videos.size();
-            data = "items:" + videoList  + ", total:" + total;
-
+            data.setItems(videoList);
+            data.setTotal(total);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -190,9 +196,8 @@ public class VideoServiceImpl extends ServiceImpl<VideoDao, Video> implements Vi
             jedisPool.close();
         }
 
+        //return new ResponseResult(200, "查询成功！",data);
         return new ResponseResult(200, "查询成功！",data);
-
-
 
     }
 

@@ -1,6 +1,7 @@
 package com.clipg.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Data;
 
 /**
  * 响应结果类
@@ -20,14 +21,15 @@ public class ResponseResult<T> {
     /**
      * 查询到的结果数据，
      */
-    private T data;
+    //private T data;
+    private Datas data;
 
     public ResponseResult(Integer code, String msg) {
         this.code = code;
         this.msg = msg;
     }
 
-    public ResponseResult(Integer code, T data) {
+    public ResponseResult(Integer code, Datas data) {
         this.code = code;
         this.data = data;
     }
@@ -48,15 +50,15 @@ public class ResponseResult<T> {
         this.msg = msg;
     }
 
-    public T getData() {
+    public Datas getData() {
         return data;
     }
 
-    public void setData(T data) {
+    public void setData(Datas data) {
         this.data = data;
     }
 
-    public ResponseResult(Integer code, String msg, T data) {
+    public ResponseResult(Integer code, String msg, Datas data) {
         this.code = code;
         this.msg = msg;
         this.data = data;

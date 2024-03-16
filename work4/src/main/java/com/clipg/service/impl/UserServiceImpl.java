@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.clipg.dao.UserDao;
+import com.clipg.domain.Datas;
 import com.clipg.domain.LoginUser;
 import com.clipg.domain.ResponseResult;
 import com.clipg.domain.User;
@@ -40,6 +41,7 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
     public ResponseResult login(User user) {
 
         HashMap<String, String> map = null;
+        Datas data = new Datas<>();
         try {
             // AuthenticationManager的authenticate方法进行用户认证
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
@@ -52,21 +54,19 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
             LoginUser loginUser = (LoginUser) authenticate.getPrincipal();
             String userid = loginUser.getUser().getId().toString();
             //// 把完整的用户信息存入redis
-            //String uuid = JwtUtil.getUUID();
-            //String jwt = JwtUtil.createJWT(uuid);
             String jwt = JwtUtil.createJWT(userid);
             //loginUser.setUuid(uuid);
             redisCache.setCacheObject("login:" + userid,loginUser);
-            //redisCache.setCacheObject("login_" + uuid, JSON.toJSONString(loginUser));
             //// 把token响应给前端
             map = new HashMap<>();
             map.put("token", jwt);
+            data.setItems(map);
         } catch (RuntimeException e) {
             e.printStackTrace();
             return new ResponseResult(-1, "登录失败！");
         }
 
-        return  new ResponseResult(200, "登录成功！", map);
+        return  new ResponseResult(200, "登录成功！", data);
 
 
     }
@@ -111,14 +111,14 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
     @Override
     public ResponseResult info(String id) {
 
-        String data = null;
+        Datas data = new Datas<>();
         try {
             //根据id
             QueryWrapper<User> queryWrapper = new QueryWrapper<>();
             queryWrapper.eq("id", id);
             User user = userDao.selectOne(queryWrapper);
             if (user != null){
-                data = user.toString();
+                data.setItems(user);
             }
         } catch (Exception e) {
             e.printStackTrace();

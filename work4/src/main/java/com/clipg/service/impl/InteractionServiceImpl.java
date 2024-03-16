@@ -2,6 +2,7 @@ package com.clipg.service.impl;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.clipg.domain.Datas;
 import com.clipg.domain.ResponseResult;
 import com.clipg.domain.Video;
 import com.clipg.service.InteractionService;
@@ -75,7 +76,7 @@ public class InteractionServiceImpl implements InteractionService {
      */
     @Override
     public ResponseResult likeList(String userId) {
-        String data = null;
+        Datas data = new Datas<>();
         try {
             String keyPattern = "videoId:*:likes";
             List<Video> videos =new ArrayList<>();
@@ -95,7 +96,7 @@ public class InteractionServiceImpl implements InteractionService {
                     videos.add(video);
                 }
             }
-            data = "items:" + videos;
+            data.setItems(videos);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseResult(-1, "查询失败！");
@@ -151,7 +152,7 @@ public class InteractionServiceImpl implements InteractionService {
     @Override
     public ResponseResult commentList(String videoId, int pageNum, int pageSize) {
 
-        String data = null;
+        Datas data = new Datas<>();
         String redisHost = "localhost";
         int redisPort = 6379;
         // 创建 Jedis 连接池配置
@@ -170,8 +171,8 @@ public class InteractionServiceImpl implements InteractionService {
                 String comment = tuple.getElement();
                 commentList.add(comment);
             }
-            data = "items:" + commentList;
-
+            data.setItems(commentList);
+            data.setItems(commentList.size());
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseResult(-1, "查询失败！");
@@ -199,7 +200,7 @@ public class InteractionServiceImpl implements InteractionService {
             String key = "videoId:" + videoId + ":comments";
 
             // 构建评论信息，包括用户ID和评论内容
-            // 这里假设评论信息的格式为 "userId:timestamp:content"
+
             String commentInfo = userId + ":"  + comment;
 
             // 从 Redis 缓存中移除指定评论

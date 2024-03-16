@@ -47,7 +47,9 @@ public class SocialServiceImpl implements SocialService {
             LambdaQueryWrapper<Follow> lambdaQueryWrapper = new LambdaQueryWrapper<>();
             lambdaQueryWrapper.eq(Follow::getFollowerId,followerId).eq(Follow::getFollowingId,followingId);
             Follow isFollow = followDao.selectOne(lambdaQueryWrapper);
+            //点赞，且未关注
             if (actionType == 0 && isFollow == null){
+                //保存数据库中
                 Follow follow = new Follow();
                 follow.setFollowerId(followerId);
                 follow.setFollowingId(followingId);
@@ -78,7 +80,7 @@ public class SocialServiceImpl implements SocialService {
     @Override
     public ResponseResult followingList(String userId, int pageNum, int pageSize) {
 
-        String data = null;
+        Datas data = new Datas<>();
         try {
             Page<UserInfo> page = new Page<>(pageNum, pageSize);
 
@@ -102,9 +104,10 @@ public class SocialServiceImpl implements SocialService {
 
             page.setRecords(userList);
             int total = userList.size();
-            data = "items:" + userList + ", total:" + total;
+            data.setItems(userList);
+            data.setTotal(total);
             if (total == 0) {
-                data = "该用户还未关注其他用户！";
+                return new ResponseResult(-1, "该用户还未关注其他用户！");
             }
 
         } catch (Exception e) {
@@ -127,7 +130,7 @@ public class SocialServiceImpl implements SocialService {
     @Override
     public ResponseResult followerList(String userId, int pageNum, int pageSize) {
 
-        String data = null;
+        Datas data = new Datas<>();
         try {
             Page<UserInfo> page = new Page<>(pageNum, pageSize);
 
@@ -151,14 +154,15 @@ public class SocialServiceImpl implements SocialService {
 
             page.setRecords(userList);
             int total = userList.size(); // 获取总数
-            data = "items:" + userList + ", total:" + total;
+            data.setItems(userList);
+            data.setTotal(total);
             if (total == 0) {
-                data = "该用户还没有粉丝！";
+                return new ResponseResult(-1, "该用户还没有粉丝！");
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            new ResponseResult(-1, "查询失败！");
+            return new ResponseResult(-1, "查询失败！");
         }
 
         return new ResponseResult(200, "查询成功！", data);
@@ -169,7 +173,7 @@ public class SocialServiceImpl implements SocialService {
     @Override
     public ResponseResult friendsList(String token, int pageNum, int pageSize) {
 
-        String data = null;
+        Datas data = new Datas<>();
         try {
             Claims claims = JwtUtil.parseJWT(token);
             String userId = claims.getSubject();
@@ -213,9 +217,10 @@ public class SocialServiceImpl implements SocialService {
             }
 
             if (friendList.isEmpty()) {
-                data = "当前用户还没有好友！";
+                return new ResponseResult(-1, "当前用户还没有好友！");
             } else {
-                data = "items:" + friendList + ", total:" + friendList.size();
+                data.setItems(friendList);
+                data.setTotal(friendList.size());
             }
 
         } catch (Exception e) {

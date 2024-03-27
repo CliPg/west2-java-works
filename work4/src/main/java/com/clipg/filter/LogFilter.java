@@ -8,13 +8,16 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
+/**
+ * @author 77507
+ */
 @Component
 public class LogFilter implements Filter {
 
     private static final Logger LOG = LoggerFactory.getLogger(LogFilter.class);
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
 
     }
 

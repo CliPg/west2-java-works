@@ -1,16 +1,21 @@
 package com.clipg.service;
 
-import com.clipg.domain.ResponseResult;
+import com.clipg.dto.ResponseResult;
 
+/**
+ * @author 77507
+ */
 public interface InteractionService {
 
-    ResponseResult like(String actionType, String videoId, String token);
+    ResponseResult likeVideo(String actionType, String videoId) throws Exception;
 
-    ResponseResult likeList(String userId);
+    ResponseResult listVideoLikeByUserId(String userId);
 
-    ResponseResult commentPublish(String token, String videoId, String content);
+    ResponseResult publishCommentToVideo(String videoId, String content) throws Exception;
+
+    ResponseResult publishCommentToComment(String parentId, String content) throws Exception;
 
     ResponseResult commentList(String videoId, int pageNum, int pageSize);
 
-    ResponseResult commentDelete(String token, String videoId, String comment);
+    ResponseResult commentDelete(String token, String commentId) throws Exception;
 }

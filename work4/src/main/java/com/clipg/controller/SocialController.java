@@ -1,11 +1,14 @@
 package com.clipg.controller;
 
 
-import com.clipg.domain.ResponseResult;
+import com.clipg.dto.ResponseResult;
 import com.clipg.service.SocialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * @author 77507
+ */
 @RestController
 public class SocialController {
 
@@ -14,9 +17,8 @@ public class SocialController {
 
     @PostMapping("/relation/action")
     public ResponseResult follow(@RequestParam("followingId") String followingId,
-                                 @RequestParam("actionType") int actionType,
-                                 @RequestHeader("token") String token){
-        return socialService.follow(token,followingId,actionType);
+                                 @RequestParam("actionType") int actionType) throws Exception {
+        return socialService.follow(followingId,actionType);
     }
 
     @GetMapping("/following/list")
@@ -34,10 +36,9 @@ public class SocialController {
     }
 
     @GetMapping("/friends/list")
-    public ResponseResult friendsList(@RequestHeader("token") String token,
-                                       @RequestParam("pageNum") int pageNum,
-                                       @RequestParam("pageSize") int pageSize){
-        return socialService.friendsList(token, pageNum, pageSize);
+    public ResponseResult friendsList(@RequestParam("pageNum") int pageNum,
+                                       @RequestParam("pageSize") int pageSize) throws Exception {
+        return socialService.friendsList(pageNum, pageSize);
     }
 
 }

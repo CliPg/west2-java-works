@@ -5,9 +5,15 @@ import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerIntercept
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * @author 77507
+ */
 @Configuration
 public class MpConfig {
 
+    /**
+     * 分页插件
+     */
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor(){
         //定义mp拦截器

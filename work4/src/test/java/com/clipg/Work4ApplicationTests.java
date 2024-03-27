@@ -1,7 +1,6 @@
 package com.clipg;
 
-import com.clipg.dao.UserDao;
-import com.clipg.domain.User;
+import com.clipg.entity.User;
 import com.clipg.service.InteractionService;
 import com.clipg.service.UserService;
 import com.clipg.service.VideoService;
@@ -9,9 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @SpringBootTest

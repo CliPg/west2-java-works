@@ -5,14 +5,80 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="896b3186-577b-4afd-a188-9522dc10e265" name="更改" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/clipg/dto/UserDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/domain/ResponseResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/domain/ResponseResult.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/Work4Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/Work4Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/config/MpConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/config/MpConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/config/RedisConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/config/RedisConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/controller/Code.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/controller/InteractionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/controller/InteractionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/controller/SocialController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/controller/SocialController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/controller/VideoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/controller/VideoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/dao/FollowDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/mapper/FollowMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/dao/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/mapper/UserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/dao/VideoDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/mapper/VideoMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/domain/Datas.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/domain/Follow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/entity/Follow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/domain/LoginUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/entity/LoginUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/domain/ResponseResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/dto/ResponseResult.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/domain/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/domain/UserInfo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/domain/Video.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/entity/Video.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/filter/JwtAuthenticationTokenFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/filter/JwtAuthenticationTokenFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/filter/LogFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/filter/LogFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/service/InteractionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/service/InteractionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/service/SocialService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/service/SocialService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/service/VideoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/service/VideoService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/service/impl/InteractionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/service/impl/InteractionServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/service/impl/SocialServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/service/impl/SocialServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/service/impl/UserDetailsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/service/impl/UserDetailsServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/service/impl/UserServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/service/impl/VideoServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/service/impl/VideoServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/domain/ResponseResult.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/clipg/domain/ResponseResult.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/util/FastJsonRedisSerializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/util/FastJsonRedisSerializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/util/JwtUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/util/JwtUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/util/RedisCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/util/RedisCache.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/util/WebUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/util/WebUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/clipg/Work4ApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/clipg/Work4ApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/Work4Application.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/clipg/Work4Application.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/config/MpConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/clipg/config/MpConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/config/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/clipg/config/SecurityConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/controller/Code.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/controller/InteractionController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/clipg/controller/InteractionController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/controller/SocialController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/clipg/controller/SocialController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/clipg/controller/UserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/controller/VideoController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/clipg/controller/VideoController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/dao/FollowDao.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/dao/UserDao.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/dao/VideoDao.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/domain/Datas.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/domain/Follow.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/domain/LoginUser.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/domain/ResponseResult.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/domain/User.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/domain/UserInfo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/domain/Video.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/filter/JwtAuthenticationTokenFilter.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/clipg/filter/JwtAuthenticationTokenFilter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/service/InteractionService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/clipg/service/InteractionService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/service/SocialService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/clipg/service/SocialService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/clipg/service/UserService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/service/VideoService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/clipg/service/VideoService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/service/impl/InteractionServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/clipg/service/impl/InteractionServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/service/impl/SocialServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/clipg/service/impl/SocialServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/service/impl/UserDetailsServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/clipg/service/impl/UserDetailsServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/service/impl/UserServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/clipg/service/impl/UserServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/service/impl/VideoServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/clipg/service/impl/VideoServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/util/FastJsonRedisSerializer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/clipg/util/FastJsonRedisSerializer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/util/JwtUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/clipg/util/JwtUtil.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/util/RedisCache.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/clipg/util/RedisCache.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/util/WebUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/clipg/util/WebUtils.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/clipg/Work4ApplicationTests.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/clipg/Work4ApplicationTests.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,6 +125,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
+    "extract.method.default.visibility": "private",
     "git-widget-placeholder": "master",
     "last_opened_file_path": "D:/cs学习/west2-java-work/work4",
     "node.js.detected.package.eslint": "true",
@@ -66,6 +133,9 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "工件",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
     "settings.editor.selected.configurable": "preferences.pluginManager",
     "spring.configuration.checksum": "34bde5322f33f04bac567e6a889da99f",
     "vue.rearranger.settings.migration": "true"
@@ -192,12 +262,25 @@
       <workItem from="1710484615962" duration="312000" />
       <workItem from="1710484982768" duration="5002000" />
       <workItem from="1710549612881" duration="5506000" />
-      <workItem from="1710557000604" duration="6883000" />
+      <workItem from="1710557000604" duration="20175000" />
+      <workItem from="1710854684277" duration="587000" />
+      <workItem from="1710901968535" duration="100059000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

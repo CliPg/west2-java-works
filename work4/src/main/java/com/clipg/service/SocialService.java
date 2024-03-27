@@ -1,13 +1,12 @@
 package com.clipg.service;
 
-import com.clipg.domain.ResponseResult;
-
+import com.clipg.dto.ResponseResult;
+/**
+ * @author 77507
+ */
 public interface SocialService {
-
-    ResponseResult follow(String token, String followingId, int actionType);
-
+    ResponseResult follow(String followingId, int actionType) throws Exception;
     ResponseResult followingList(String userId, int pageNum, int pageSize);
     ResponseResult followerList(String userId, int pageNum, int pageSize);
-
-    public ResponseResult friendsList(String token, int pageNum, int pageSize);
+    ResponseResult friendsList(int pageNum, int pageSize) throws Exception;
 }

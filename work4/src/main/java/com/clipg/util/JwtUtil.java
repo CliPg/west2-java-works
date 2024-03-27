@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.UUID;
 
 /**
- * JWT工具类
+ * @author 77507
  */
 public class JwtUtil {
 
@@ -21,18 +21,15 @@ public class JwtUtil {
     //设置秘钥明文
     public static final String JWT_KEY = "liu";
 
+
     public static String getUUID() {
-        String token = UUID.randomUUID().toString().replaceAll("-", "");
-        return token;
+        return UUID.randomUUID().toString().replaceAll("-", "");
     }
 
     /**
      * 生成jtw
-     *
-     * @param subject token中要存放的数据（json格式）
-     * @return
      */
-    public static String createJWT(String subject) {
+    public static String createJwt(String subject) {
         JwtBuilder builder = getJwtBuilder(subject, null, getUUID());// 设置过期时间
         return builder.compact();
     }
@@ -42,22 +39,16 @@ public class JwtUtil {
      *
      * @param subject   token中要存放的数据（json格式）
      * @param ttlMillis token超时时间
-     * @return
      */
-    public static String createJWT(String subject, Long ttlMillis) {
+    public static String createJwt(String subject, Long ttlMillis) {
         JwtBuilder builder = getJwtBuilder(subject, ttlMillis, getUUID());// 设置过期时间
         return builder.compact();
     }
 
     /**
      * 创建token
-     *
-     * @param id
-     * @param subject
-     * @param ttlMillis
-     * @return
      */
-    public static String createJWT(String id, String subject, Long ttlMillis) {
+    public static String createJwt(String id, String subject, Long ttlMillis) {
         JwtBuilder builder = getJwtBuilder(subject, ttlMillis, id);// 设置过期时间
         return builder.compact();
     }
@@ -83,12 +74,8 @@ public class JwtUtil {
 
     /**
      * 解析
-     *
-     * @param jwt
-     * @return
-     * @throws Exception
      */
-    public static Claims parseJWT(String jwt) throws Exception {
+    public static Claims parseJwt(String jwt) throws Exception {
         SecretKey secretKey = generalKey();
         return Jwts.parser()
                 .setSigningKey(secretKey)
@@ -98,18 +85,11 @@ public class JwtUtil {
 
     /**
      * 生成加密后的秘钥 secretKey
-     *
-     * @return
      */
     public static SecretKey generalKey() {
         byte[] encodedKey = Base64.getDecoder().decode(JwtUtil.JWT_KEY);
-        SecretKey key = new SecretKeySpec(encodedKey, 0, encodedKey.length, "AES");
-        return key;
+        return new SecretKeySpec(encodedKey, 0, encodedKey.length, "AES");
     }
 
-    public static void main(String[] args) throws Exception {
-        String jwt = createJWT("2131");
-        System.out.println(jwt);
-    }
 }
 

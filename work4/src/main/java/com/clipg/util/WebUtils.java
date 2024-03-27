@@ -2,7 +2,9 @@ package com.clipg.util;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
+/**
+ * @author 77507
+ */
 public class WebUtils
 {
     /**

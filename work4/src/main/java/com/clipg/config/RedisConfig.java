@@ -8,13 +8,13 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
- * RedisConfig配置类
+ * @author 77507
  */
 @Configuration
 public class RedisConfig {
 
     @Bean
-    @SuppressWarnings(value = {"unchecked", "rawtypes"})
+    @SuppressWarnings(value = {"rawtypes"})
     public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
         RedisTemplate<Object, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(connectionFactory);

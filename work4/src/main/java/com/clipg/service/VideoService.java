@@ -1,16 +1,19 @@
 package com.clipg.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.clipg.domain.ResponseResult;
-import com.clipg.domain.Video;
-
+import com.clipg.dto.ResponseResult;
+import com.clipg.entity.Video;
+import org.springframework.web.multipart.MultipartFile;
+/**
+ * @author 77507
+ */
 public interface VideoService extends IService<Video> {
 
-    ResponseResult publish(String token, Video video);
+    ResponseResult publishVideo(MultipartFile data, String title, String description) throws Exception;
 
-    ResponseResult list(String userId, int pageNum, int pageSize);
+    ResponseResult listVideoByUserId(String userId, int pageNum, int pageSize);
 
-    ResponseResult search(String keywords, int pageNum, int pageSize);
+    ResponseResult searchByKeyword(String keywords, int pageNum, int pageSize);
 
-    ResponseResult popular(int pageNum, int pageSize);
+    ResponseResult popular();
 }

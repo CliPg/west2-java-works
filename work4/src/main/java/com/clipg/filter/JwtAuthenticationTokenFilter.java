@@ -1,7 +1,6 @@
 package com.clipg.filter;
 
-import com.alibaba.fastjson.JSON;
-import com.clipg.domain.LoginUser;
+import com.clipg.entity.LoginUser;
 import com.clipg.util.JwtUtil;
 import com.clipg.util.RedisCache;
 import io.jsonwebtoken.Claims;
@@ -19,6 +18,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * @author 77507
+ */
 @Component
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
@@ -39,15 +41,14 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
         String userid;
         try {
-            Claims claims = JwtUtil.parseJWT(token);
+            Claims claims = JwtUtil.parseJwt(token);
             userid = claims.getSubject();
         } catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException("token非法！！！");
+            throw new RuntimeException("token过期！");
         }
         // 从redis中获取用户信息
         String redisKey = "login:" + userid;
-        //LoginUser loginUser = JSON.parseObject(redisCache.getCacheObject(redisKey), LoginUser.class);
         LoginUser loginUser = redisCache.getCacheObject(redisKey);
         if (Objects.isNull(loginUser)) {
             throw new RuntimeException("用户未登录！！！");

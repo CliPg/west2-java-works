@@ -1,10 +1,13 @@
 package com.clipg.controller;
 
-import com.clipg.domain.ResponseResult;
+import com.clipg.dto.ResponseResult;
 import com.clipg.service.InteractionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * @author 77507
+ */
 @RestController
 public class InteractionController {
 
@@ -13,21 +16,25 @@ public class InteractionController {
 
     @PostMapping("/like/action")
     public ResponseResult likeAction(@RequestParam("videoId")String videoId,
-                                     @RequestParam("actionType")String actionType,
-                                     @RequestHeader("token") String token){
-        return interactionService.like(actionType, videoId, token);
+                                     @RequestParam("actionType")String actionType) throws Exception {
+        return interactionService.likeVideo(actionType, videoId);
     }
 
     @GetMapping("/like/list")
     public ResponseResult likeList(@RequestParam("userId")String userId){
-        return interactionService.likeList(userId);
+        return interactionService.listVideoLikeByUserId(userId);
     }
 
-    @PostMapping("/comment/publish")
-    public ResponseResult commentPublish(@RequestParam("videoId")String videoId,
-                                         @RequestParam("comment")String comment,
-                                         @RequestHeader("token") String token){
-        return interactionService.commentPublish(token, videoId, comment);
+    @PostMapping("/comment/publish/toVideo")
+    public ResponseResult commentPublishToVideo(@RequestParam("videoId")String videoId,
+                                         @RequestParam("content")String content) throws Exception {
+        return interactionService.publishCommentToVideo(videoId, content);
+    }
+
+    @PostMapping("/comment/publish/toComment")
+    public ResponseResult commentPublishToComment(@RequestParam("parentId")String parentId,
+                                         @RequestParam("content")String content) throws Exception {
+        return interactionService.publishCommentToComment(parentId, content);
     }
 
     @GetMapping("/comment/list")
@@ -38,10 +45,9 @@ public class InteractionController {
     }
 
     @DeleteMapping("/comment/delete")
-    public ResponseResult commentDelet(@RequestParam("videoId")String videoId,
-                                       @RequestParam("comment")String comment,
-                                       @RequestHeader("token") String token){
-        return interactionService.commentDelete(token, videoId, comment);
+    public ResponseResult commentDelet(@RequestParam("commentId")String commentId,
+                                       @RequestHeader("token") String token) throws Exception {
+        return interactionService.commentDelete(token,commentId);
     }
 
 

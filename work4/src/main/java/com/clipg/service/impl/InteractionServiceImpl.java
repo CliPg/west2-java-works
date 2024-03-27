@@ -1,220 +1,189 @@
 package com.clipg.service.impl;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.clipg.domain.Datas;
-import com.clipg.domain.ResponseResult;
-import com.clipg.domain.Video;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.clipg.dto.*;
+import com.clipg.entity.*;
+import com.clipg.exception.BusinessException;
+import com.clipg.mapper.CommentMapper;
+import com.clipg.mapper.LikeMapper;
+import com.clipg.mapper.VideoMapper;
 import com.clipg.service.InteractionService;
 import com.clipg.service.VideoService;
-import com.clipg.util.JwtUtil;
-import io.jsonwebtoken.Claims;
+import com.clipg.util.UserHolder;
 import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPoolConfig;
-import redis.clients.jedis.resps.Tuple;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * @author 77507
+ */
 @Service
 public class InteractionServiceImpl implements InteractionService {
 
     @Autowired
     private VideoService videoService;
-
-    @Resource
-    StringRedisTemplate stringRedisTemplate;
+    @Autowired
+    private RedisTemplate redisTemplate;
+    @Autowired
+    private LikeMapper likeMapper;
+    @Autowired
+    private CommentMapper commentMapper;
+    @Autowired
+    private VideoMapper videoMapper;
+    @Autowired
+    private UserHolder userHolder;
 
     /**
      * 对视频进行点赞/取赞
-     * @param actionType
-     * @param videoId
-     * @param token
-     * @return
      */
+    @Transactional
     @Override
-    public ResponseResult like(String actionType, String videoId, String token) {
-
-        try {
-            //获取登录用户
-            Claims claims = JwtUtil.parseJWT(token);
-            String userId = claims.getSubject();
-            //判断当前用户是否已经点赞
-            String key = "videoId:" + videoId + ":likes";
-            boolean isMember =  stringRedisTemplate.opsForSet().isMember(key, userId.toString());
-            if (BooleanUtils.isFalse(isMember) && "1".equals(actionType)){
-                boolean isSuccess = videoService.update().setSql("like_count = like_count + 1").eq("id", videoId).update();
-                if (isSuccess){
-                    stringRedisTemplate.opsForSet().add(key, userId.toString());
-                }
-
-            }else if (!BooleanUtils.isFalse(isMember) && "2".equals(actionType)) {
-                boolean isSuccess = videoService.update().setSql("like_count = like_count - 1").eq("id", videoId).update();
-                if (isSuccess){
-                    stringRedisTemplate.opsForSet().remove(key, userId.toString());
-                }
+    public ResponseResult likeVideo(String actionType, String videoId) {
+        String userId = userHolder.getUserId();
+        //判断当前用户是否已经点赞
+        String key = "videoId:" + videoId + ":likes";
+        boolean isMember = Boolean.TRUE.equals(redisTemplate.opsForSet().isMember(key, userId));
+        if (BooleanUtils.isFalse(isMember) && "1".equals(actionType)){
+            boolean isSuccess = videoService.update().setSql("like_count = like_count + 1").eq("id", videoId).update();
+            if (isSuccess){
+                //存入redis
+                redisTemplate.opsForSet().add(key, userId);
+                //存入数据库
+                VideoLikes videoLikes = new VideoLikes();
+                videoLikes.setVideoId(userId);
+                videoLikes.setVideoId(videoId);
+                likeMapper.insert(videoLikes);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseResult(-1, "操作失败！");
+        }else if (!BooleanUtils.isFalse(isMember) && "2".equals(actionType)) {
+            boolean isSuccess = videoService.update().setSql("like_count = like_count - 1").eq("id", videoId).update();
+            if (isSuccess){
+                //移除redis
+                redisTemplate.opsForSet().remove(key, userId);
+                //移除数据库
+                LambdaQueryWrapper<VideoLikes> lqw = new LambdaQueryWrapper<>();
+                lqw.eq(VideoLikes::getUserId, userId).eq(VideoLikes::getVideoId, videoId);
+                likeMapper.delete(lqw);
+            }
+        }else {
+            throw new BusinessException(Code.ERROR, Message.ERROR);
         }
-        return  new ResponseResult(200, "操作成功！");
+        return  new ResponseResult(Code.SUCCESS, Message.SUCCESS);
     }
 
     /**
      * 返回指定用户点赞的视频
-     * @param userId
-     * @return
      */
     @Override
-    public ResponseResult likeList(String userId) {
-        Datas data = new Datas<>();
-        try {
-            String keyPattern = "videoId:*:likes";
-            List<Video> videos =new ArrayList<>();
-
-            // 获取所有键匹配的视频点赞集合
-            Set<String> keys = stringRedisTemplate.keys(keyPattern);
-
-            // 遍历所有匹配的键
-            for (String key : keys) {
-                // 检查该用户是否点赞过当前视频
-                if (stringRedisTemplate.opsForSet().isMember(key, userId)) {
-                    // 从键中提取视频ID并添加到集合中
-                    String videoId = key.split(":")[1]; // 视频ID位于键的第二部分
-                    QueryWrapper queryWrapper = new QueryWrapper<>();
-                    queryWrapper.eq("id", videoId);
-                    Video video = videoService.getOne(queryWrapper);
-                    videos.add(video);
-                }
-            }
-            data.setItems(videos);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseResult(-1, "查询失败！");
+    public ResponseResult listVideoLikeByUserId(String userId) {
+        String keyPattern = "videoId:*:likes";
+        List<Video> videoList = new ArrayList<>();
+        // 获取所有键匹配的视频点赞集合
+        Set<String> keys = redisTemplate.keys(keyPattern);
+        // 遍历所有匹配的键
+        if(keys == null){
+            return new ResponseResult(Code.ERROR,Message.ERROR);
         }
-        return new ResponseResult(200, "查询成功！", data);
-
+        for (String key : keys) {
+            // 检查该用户是否点赞过当前视频
+            if (Boolean.TRUE.equals(redisTemplate.opsForSet().isMember(key, userId))) {
+                // 从键中提取视频ID并添加到集合中
+                String videoId = key.split(":")[1]; // 视频ID位于键的第二部分
+                QueryWrapper queryWrapper = new QueryWrapper<>();
+                queryWrapper.eq("id", videoId);
+                Video video = videoService.getOne(queryWrapper);
+                videoList.add(video);
+            }
+        }
+        if (videoList.isEmpty()){
+            return new ResponseResult(Code.ERROR,Message.ERROR);
+        }
+        return new ResponseResult(Code.SUCCESS, Message.SUCCESS, new VideoDto(videoList,videoList.size()));
 
     }
 
     /**
-     * 对视频进行评论
-     * @param token
-     * @param videoId
-     * @param content
-     * @return
+     * 对视频评论
      */
+    @Transactional
     @Override
-    public ResponseResult commentPublish(String token, String videoId, String content) {
+    public ResponseResult publishCommentToVideo(String videoId, String content) throws Exception {
+        String userId = userHolder.getUserId();
+        Comment comment = new Comment();
+        comment.setUserId(userId);
+        comment.setVideoId(videoId);
+        comment.setContent(content);
+        comment.setCreateTime(new Date());
+        commentMapper.insert(comment);
+        return new ResponseResult(Code.SUCCESS, Message.SUCCESS);
+    }
 
-        try {
-            // 获取登录用户
-            Claims claims = JwtUtil.parseJWT(token);
-            String userId = claims.getSubject();
-
-            // 构建视频评论有序集合的键
-            String key = "videoId:" + videoId + ":comments";
-
-            // 获取当前时间戳
-            long timestamp = System.currentTimeMillis();
-
-            // 构建评论信息，包括用户ID和评论内容
-            //String commentInfo = userId + ":" + timestamp + ":" + content;
-            String commentInfo = userId + ":"  + content;
-
-            // 添加评论到有序集合中，使用时间戳作为分数
-            stringRedisTemplate.opsForZSet().add(key, commentInfo, timestamp);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseResult(-1, "评论失败！");
-        } finally {
-            return new ResponseResult(200, "评论成功！");
-        }
+    /**
+     * 对评论评论
+     */
+    @Transactional
+    @Override
+    public ResponseResult publishCommentToComment(String parentId, String content) throws Exception {
+        String userId = userHolder.getUserId();
+        Comment commentParent = commentMapper.selectById(parentId);
+        Comment comment = new Comment();
+        comment.setUserId(userId);
+        comment.setVideoId(commentParent.getVideoId());
+        comment.setParentId(parentId);
+        comment.setContent(content);
+        comment.setCreateTime(new Date());
+        commentParent.setChildCount(commentParent.getChildCount()+1);
+        commentMapper.insert(comment);
+        commentMapper.updateById(commentParent);
+        return new ResponseResult(Code.SUCCESS, Message.SUCCESS);
     }
 
     /**
      * 获取视频的评论列表
-     * @param videoId
-     * @param pageNum
-     * @param pageSize
-     * @return
      */
     @Override
     public ResponseResult commentList(String videoId, int pageNum, int pageSize) {
-
-        Datas data = new Datas<>();
-        String redisHost = "localhost";
-        int redisPort = 6379;
-        // 创建 Jedis 连接池配置
-        JedisPoolConfig poolConfig = new JedisPoolConfig();
-        JedisPool jedisPool = new JedisPool(poolConfig, redisHost, redisPort);
-        try(Jedis jedis = jedisPool.getResource()) {
-            // 构建视频评论有序集合的键
-            String key = "videoId:" + videoId + ":comments";
-
-            // 从 Redis 缓存中获取视频的评论
-            List<Tuple> comments =  jedis.zrevrangeWithScores(key, (pageNum-1) * pageSize, pageNum * pageSize - 1);
-
-            // 构建评论列表
-            List<String> commentList = new ArrayList<>();
-            for (Tuple tuple : comments) {
-                String comment = tuple.getElement();
-                commentList.add(comment);
-            }
-            data.setItems(commentList);
-            data.setItems(commentList.size());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseResult(-1, "查询失败！");
+        IPage page = new Page(pageNum, pageSize);
+        QueryWrapper qw = new QueryWrapper<>();
+        qw.eq("video_id",videoId);
+        commentMapper.selectPage(page, qw);
+        List<Comment> commentList = page.getRecords();
+        int total = commentMapper.selectCount(qw);
+        if (commentList.isEmpty()) {
+            throw new BusinessException(Code.ERROR,Message.ERROR);
         }
-
-        return new ResponseResult(200, "查询成功！", data);
+        return new ResponseResult(Code.SUCCESS, Message.SUCCESS, new CommentDto(commentList,total));
 
     }
 
     /**
      * 用户删除自己已发表的评论
-     * @param token
-     * @param videoId
-     * @param comment
-     * @return
      */
+    @Transactional
     @Override
-    public ResponseResult commentDelete(String token, String videoId, String comment) {
-        try {
-            // 获取登录用户
-            Claims claims = JwtUtil.parseJWT(token);
-            String userId = claims.getSubject();
-
-            // 构建视频评论有序集合的键
-            String key = "videoId:" + videoId + ":comments";
-
-            // 构建评论信息，包括用户ID和评论内容
-
-            String commentInfo = userId + ":"  + comment;
-
-            // 从 Redis 缓存中移除指定评论
-            long removed = stringRedisTemplate.opsForZSet().remove(key, commentInfo);
-
-            // 判断评论是否删除成功
-            if (removed > 0) {
-                return new ResponseResult(200, "评论删除成功！");
-            } else {
-                return new ResponseResult(-1, "评论不存在或已被删除！");
-            }
-        } catch (Exception e) {
-            throw new RuntimeException("删除评论失败！", e);
+    public ResponseResult commentDelete(String token, String commentId) throws Exception {
+        String userId = userHolder.getUserId();
+        Comment comment = commentMapper.selectById(commentId);
+        if (!comment.getUserId().equals(userId)){
+            throw new BusinessException(Code.ERROR,Message.ERROR);
         }
+        commentMapper.deleteById(commentId);
+        videoService.update().setSql("comment_count = comment_count - 1").eq("id", comment.getVideoId()).update();
+        if (comment.getParentId() != null){
+            Comment commentParent = commentMapper.selectById(comment.getParentId());
+            commentParent.setChildCount(commentParent.getChildCount()-1);
+        }
+        return new ResponseResult(Code.SUCCESS, Message.SUCCESS);
     }
 
 }

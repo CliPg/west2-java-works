@@ -1,12 +1,14 @@
 package com.clipg.controller;
 
-import com.clipg.domain.ResponseResult;
-import com.clipg.domain.User;
-import com.clipg.domain.Video;
+import com.clipg.dto.ResponseResult;
 import com.clipg.service.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+/**
+ * @author 77507
+ */
 @RestController
 @RequestMapping("/video")
 public class VideoController {
@@ -15,28 +17,28 @@ public class VideoController {
     private VideoService videoService;
 
     @PostMapping("/publish")
-    public ResponseResult publish(@RequestBody Video video,
-                                  @RequestHeader("token") String token){
-        return videoService.publish(token, video);
+    public ResponseResult publishVideo(@RequestParam("data") MultipartFile data,
+                                       @RequestParam("title") String title,
+                                       @RequestParam("description") String description) throws Exception {
+        return videoService.publishVideo(data, title, description);
     }
 
     @GetMapping("/list")
-    public ResponseResult list(@RequestParam("userId") String userId,
-                               @RequestParam("pageNum") int pageNum,
-                               @RequestParam("pageSize") int pageSize){
-        return videoService.list(userId,pageNum,pageSize);
+    public ResponseResult listVideoByUserId(@RequestParam("userId") String userId,
+                                            @RequestParam("pageNum") int pageNum,
+                                            @RequestParam("pageSize") int pageSize){
+        return videoService.listVideoByUserId(userId,pageNum,pageSize);
     }
 
     @PostMapping("/search")
-    public ResponseResult search(@RequestParam("keywords") String keywords,
-                                 @RequestParam("pageNum") int pageNum,
-                                 @RequestParam("pageSize") int pageSize){
-        return videoService.search(keywords,pageNum,pageSize);
+    public ResponseResult searchByKeyword(@RequestParam("keywords") String keywords,
+                                          @RequestParam("pageNum") int pageNum,
+                                          @RequestParam("pageSize") int pageSize){
+        return videoService.searchByKeyword(keywords,pageNum,pageSize);
     }
 
     @GetMapping("/popular")
-    public ResponseResult popular(@RequestParam("pageNum") int pageNum,
-                                  @RequestParam("pageSize") int pageSize){
-        return videoService.popular(pageNum,pageSize);
+    public ResponseResult popular(){
+        return videoService.popular();
     }
 }

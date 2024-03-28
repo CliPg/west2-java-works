@@ -5,6 +5,9 @@ import com.clipg.entity.User;
 import com.clipg.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 /**
  * @author 77507
@@ -32,7 +35,7 @@ public class UserController {
     }
 
     @PutMapping("/avatar/upload")
-    public ResponseResult avatarUpload(@RequestParam("avatarUrl") String avatarUrl)throws Exception {
-        return userService.avatarUpload(avatarUrl);
+    public ResponseResult avatarUpload(@RequestParam("data")MultipartFile file) throws IOException {
+        return userService.avatarUpload(file);
     }
 }

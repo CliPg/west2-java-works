@@ -18,6 +18,5 @@ public class UploadVideoTask {
     public void uploadVideo(MultipartFile data, File videoFile) throws IOException {
         // 将上传的视频文件保存到本地
         data.transferTo(videoFile);
-        log.info("上传成功");
     }
 }

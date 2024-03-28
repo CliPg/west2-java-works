@@ -146,20 +146,18 @@ public class InteractionServiceImpl implements InteractionService {
      */
     @Override
     public ResponseResult commentList(String videoId, int pageNum, int pageSize) {
-        IPage page = new Page(pageNum, pageSize);
-        QueryWrapper qw = new QueryWrapper<>();
-        qw.eq("video_id",videoId);
-        commentMapper.selectPage(page, qw);
-        List<Comment> commentList = page.getRecords();
+        QueryWrapper<Comment> qw = new QueryWrapper<>();
+        qw.eq("video_id", videoId);
+        Page<Comment> page = new Page<>(pageNum, pageSize);
+        IPage<Comment> commentPage = commentMapper.selectPage(page, qw);
+        List<Comment> commentList = commentPage.getRecords();
         if (commentList.isEmpty()) {
-            return new ResponseResult(Code.ERROR,Message.ERROR);
+            return new ResponseResult(Code.ERROR, Message.ERROR);
         }
-        int total = commentMapper.selectCount(qw);
-        if (pageNum > total || pageSize > total || pageNum < 0 || pageSize <= 0){
-            throw  new BusinessException(Code.ERROR,Message.ERROR);
-        }
-        return new ResponseResult(Code.SUCCESS, Message.SUCCESS, new CommentDto(commentList,commentMapper.selectCount(qw)));
+        int total = (int) commentPage.getTotal();
+        return new ResponseResult(Code.SUCCESS, Message.SUCCESS, new CommentDto(page.getRecords(), total));
     }
+
 
     /**
      * 用户删除自己已发表的评论

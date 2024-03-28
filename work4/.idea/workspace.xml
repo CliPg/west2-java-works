@@ -6,15 +6,24 @@
   <component name="ChangeListManager">
     <list default="true" id="896b3186-577b-4afd-a188-9522dc10e265" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/controller/InteractionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/controller/InteractionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/controller/UserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/service/InteractionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/service/InteractionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/service/SocialService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/service/SocialService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/service/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/service/impl/InteractionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/service/impl/InteractionServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/service/impl/SocialServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/service/impl/SocialServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/service/impl/UserServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/service/impl/VideoServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/service/impl/VideoServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/controller/InteractionController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/clipg/controller/InteractionController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/task/UploadVideoTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/task/UploadVideoTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/clipg/controller/UserController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/service/InteractionService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/clipg/service/InteractionService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/service/SocialService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/clipg/service/SocialService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/clipg/service/UserService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/service/impl/InteractionServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/clipg/service/impl/InteractionServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/service/impl/SocialServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/clipg/service/impl/SocialServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/service/impl/UserServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/clipg/service/impl/UserServiceImpl.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/service/impl/VideoServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/clipg/service/impl/VideoServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/task/UploadVideoTask.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/clipg/task/UploadVideoTask.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -201,7 +210,7 @@
       <workItem from="1710557000604" duration="20175000" />
       <workItem from="1710854684277" duration="587000" />
       <workItem from="1710901968535" duration="105594000" />
-      <workItem from="1711552103766" duration="5746000" />
+      <workItem from="1711552103766" duration="14964000" />
     </task>
     <servers />
   </component>
@@ -228,8 +237,8 @@
         </breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/clipg/service/impl/SocialServiceImpl.java</url>
-          <line>37</line>
-          <option name="timeStamp" value="33" />
+          <line>93</line>
+          <option name="timeStamp" value="43" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

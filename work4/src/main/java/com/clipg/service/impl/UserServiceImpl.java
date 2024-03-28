@@ -22,9 +22,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Objects;
+import java.util.UUID;
 
 /**
  * @author 77507
@@ -115,9 +120,27 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      */
     @Transactional
     @Override
-    public ResponseResult avatarUpload(String avatarUrl) throws Exception {
-
+    public ResponseResult avatarUpload(MultipartFile data) throws IOException {
         String id = userHolder.getUserId();
+        // 获取上传文件的原始文件名
+        String originalFilename = data.getOriginalFilename();
+        // 获取文件后缀
+        String fileExtension = getFileExtension(originalFilename);
+        // 仅保留图片文件
+        if (!Arrays.asList("jpg", "png", "gif").contains(fileExtension.toLowerCase())) {
+            throw new BusinessException(Code.ERROR,Message.ERROR);
+        }
+        // 生成图片文件名
+        String fileName = UUID.randomUUID() + "." + fileExtension;
+        // 指定图片保存路径
+        String uploadDir = "D:\\cs学习";
+        // 创建保存图片文件的目录
+        File dir = new File(uploadDir);
+        // 创建图片文件对象
+        File videoFile = new File(dir.getAbsolutePath() + File.separator + fileName);
+        //上传图片
+        data.transferTo(videoFile);
+        String avatarUrl = "http://localhost:8080/avatar/upload" + fileName;
         //上传头像
         User user = userMapper.selectById(id);
         if (user == null){
@@ -126,7 +149,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         user.setAvatarUrl(avatarUrl);
         user.setUpdateTime(new Date());
         return new ResponseResult(Code.SUCCESS,Message.SUCCESS);
+    }
 
+    public String getFileExtension(String originalFilename){
+        String fileExtension = "";
+        if (originalFilename != null && !originalFilename.isEmpty()) {
+            int lastDotIndex = originalFilename.lastIndexOf(".");
+            if (lastDotIndex != -1) {
+                fileExtension = originalFilename.substring(lastDotIndex + 1);
+            }else {
+                throw new BusinessException(Code.ERROR, Message.ERROR);
+            }
+        }
+        return fileExtension;
     }
 
     /**

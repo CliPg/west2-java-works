@@ -34,7 +34,7 @@ public class SocialServiceImpl implements SocialService {
      */
     @Transactional
     @Override
-    public ResponseResult follow(String followingId, int actionType) throws Exception {
+    public ResponseResult follow(String followingId, int actionType){
         String followerId = userHolder.getUserId();
         // 检查是否自己关注自己
         if (followerId.equals(followingId)) {
@@ -64,8 +64,8 @@ public class SocialServiceImpl implements SocialService {
         List<Follow> followList = followMapper.selectList(lqwFollow.eq(Follow::getFollowerId, userId));
         List<UserDto> userList = new ArrayList<>();
         for (Follow follow : followList){
-            LambdaQueryWrapper<User> lqwUser = new LambdaQueryWrapper<>();
-            User user = userMapper.selectOne(lqwUser.select(User::getId,User::getUsername, User::getAvatarUrl).eq(User::getId, follow.getFollowingId()));
+            String followingId = follow.getFollowingId();
+            User user = userMapper.selectById(followingId);
             UserDto userDto = new UserDto();
             userDto.setId(user.getId());
             userDto.setId(user.getUsername());
@@ -75,9 +75,13 @@ public class SocialServiceImpl implements SocialService {
         if (userList.isEmpty()) {
             return new ResponseResult(Code.ERROR,Message.ERROR);
         }
+        int total = userList.size();
+        if (pageNum > total || pageSize > total){
+            throw  new BusinessException(Code.ERROR,Message.ERROR);
+        }
         Page<UserDto> page = new Page<>(pageNum, pageSize);
         page.setRecords(userList);
-        return new ResponseResult(Code.SUCCESS, Message.SUCCESS, new FollowDto(page.getRecords(),userList.size()));
+        return new ResponseResult(Code.SUCCESS, Message.SUCCESS, new FollowDto(page.getRecords(),total));
     }
 
 
@@ -86,15 +90,12 @@ public class SocialServiceImpl implements SocialService {
      */
     @Override
     public ResponseResult followerList(String userId, int pageNum, int pageSize) {
-        //根据userId查找在数据库中的指定行，并获得相应列表
         LambdaQueryWrapper<Follow> lqwFollow = new LambdaQueryWrapper<>();
         List<Follow> followList = followMapper.selectList(lqwFollow.eq(Follow::getFollowingId, userId));
         List<UserDto> userList = new ArrayList<>();
         for (Follow follow : followList) {
             String followerId = follow.getFollowerId();
-            LambdaQueryWrapper<User> lqwUser = new LambdaQueryWrapper<>();
-            lqwUser.select(User::getId, User::getUsername, User::getAvatarUrl).eq(User::getId, followerId);
-            User user = userMapper.selectOne(lqwUser);
+            User user = userMapper.selectById(followerId);
             UserDto userDto = new UserDto();
             userDto.setId(user.getId());
             userDto.setId(user.getUsername());
@@ -104,10 +105,13 @@ public class SocialServiceImpl implements SocialService {
         if (userList.isEmpty()) {
             return new ResponseResult(Code.ERROR,Message.ERROR);
         }
+        int total = userList.size();
+        if (pageNum > total || pageSize > total){
+            throw  new BusinessException(Code.ERROR,Message.ERROR);
+        }
         Page<UserDto> page = new Page<>(pageNum, pageSize);
         page.setRecords(userList);
-        return new ResponseResult(Code.SUCCESS, Message.SUCCESS, new FollowDto(page.getRecords(),userList.size()));
-
+        return new ResponseResult(Code.SUCCESS, Message.SUCCESS, new FollowDto(page.getRecords(),total));
     }
 
 
@@ -136,14 +140,14 @@ public class SocialServiceImpl implements SocialService {
             return new ResponseResult(Code.ERROR,Message.ERROR);
         }
         int total = friendList.size();
-        if (pageNum > total || pageSize > total || pageNum < 0 || pageSize <= 0){
+        if (pageNum > total || pageSize > total){
             throw  new BusinessException(Code.ERROR,Message.ERROR);
         }
         Page<UserDto> page = new Page<>(pageNum, pageSize);
         page.setRecords(friendList);
         return new ResponseResult(Code.SUCCESS, Message.SUCCESS, new FollowDto(page.getRecords(),total));
-
     }
+
 
 
     /**

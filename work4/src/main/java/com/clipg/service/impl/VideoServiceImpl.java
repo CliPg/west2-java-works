@@ -6,12 +6,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
-import com.clipg.dto.Code;
-import com.clipg.dto.Message;
-import com.clipg.dto.VideoDto;
+import com.clipg.dto.*;
 import com.clipg.exception.BusinessException;
 import com.clipg.mapper.VideoMapper;
-import com.clipg.dto.ResponseResult;
 
 import com.clipg.entity.Video;
 import com.clipg.service.VideoService;
@@ -114,45 +111,47 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
      */
     @Override
     public ResponseResult listVideoByUserId(String userId, int pageNum, int pageSize) {
-        //设置分页信息
-        IPage page = new Page(pageNum, pageSize);
         LambdaQueryWrapper<Video> lqw = new LambdaQueryWrapper<>();
         lqw.eq(Video::getUserId, userId);
-        videoMapper.selectPage(page, lqw);
-        List<Video> videoList = page.getRecords();
-        if (videoList.isEmpty()){
-            return new ResponseResult(Code.ERROR,Message.ERROR);
-        }
-        int total = (int)page.getTotal();
-        if (pageNum > total || pageSize > total || pageNum < 0 || pageSize <= 0){
+        Page<Video> page = new Page<>(pageNum, pageSize);
+        IPage<Video> videoPage = videoMapper.selectPage(page, lqw);
+        List<Video> videoList = videoPage.getRecords();
+        int total = (int) videoPage.getTotal();
+        if (pageNum > total || pageSize > total){
             throw  new BusinessException(Code.ERROR,Message.ERROR);
         }
-        return new ResponseResult(Code.SUCCESS, Message.SUCCESS, new VideoDto(videoList,total));
+        if (videoList.isEmpty()) {
+            return new ResponseResult(Code.ERROR, Message.ERROR);
+        }
+        return new ResponseResult(Code.SUCCESS, Message.SUCCESS, new VideoDto(page.getRecords(), total));
     }
+
 
     /**
      * 根据关键字搜索视频
      */
     @Override
     public ResponseResult searchByKeyword(String keywords, int pageNum, int pageSize) {
-        IPage page = new Page(pageNum, pageSize);
+        String userId = userHolder.getUserId();
         LambdaQueryWrapper<Video> lqw = new LambdaQueryWrapper<>();
         //按照点击量排序
         if (keywords != null){
             lqw.like(Video::getTitle, keywords).or().like(Video::getDescription, keywords).orderByDesc(Video::getVisitCount);
         }
-        videoMapper.selectPage(page, lqw);
-        List<Video> videoList = page.getRecords();
-        if (videoList.isEmpty()) {
-            return new ResponseResult(Code.ERROR,Message.ERROR);
-        }
-        redisCache.setCacheObject("search:",keywords);
-        int total = (int)page.getTotal();
-        if (pageNum > total || pageSize > total || pageNum < 0 || pageSize <= 0){
+        Page<Video> page = new Page<>(pageNum, pageSize);
+        IPage<Video> videoPage = videoMapper.selectPage(page, lqw);
+        List<Video> videoList = videoPage.getRecords();
+        int total = (int) videoPage.getTotal(); // 获取总记录数
+        if (pageNum > total || pageSize > total){
             throw  new BusinessException(Code.ERROR,Message.ERROR);
         }
-        return new ResponseResult(Code.SUCCESS, Message.SUCCESS, new VideoDto(videoList,(int)page.getTotal()));
+        if (videoList.isEmpty()) {
+            return new ResponseResult(Code.ERROR, Message.ERROR);
+        }
+        redisCache.setCacheObject("search:" + keywords, userId);
+        return new ResponseResult(Code.SUCCESS, Message.SUCCESS, new VideoDto(page.getRecords(), total));
     }
+
 
     /**
      * 查询播放量排行榜

@@ -45,9 +45,8 @@ public class InteractionController {
     }
 
     @DeleteMapping("/comment/delete")
-    public ResponseResult commentDelet(@RequestParam("commentId")String commentId,
-                                       @RequestHeader("token") String token) throws Exception {
-        return interactionService.commentDelete(token,commentId);
+    public ResponseResult commentDelet(@RequestParam("commentId")String commentId) throws Exception {
+        return interactionService.commentDelete(commentId);
     }
 
 

@@ -25,15 +25,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-
 import java.io.File;
-import java.io.IOException;
 import java.util.*;
 
 
@@ -125,9 +121,13 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
         videoMapper.selectPage(page, lqw);
         List<Video> videoList = page.getRecords();
         if (videoList.isEmpty()){
-            throw new BusinessException(Code.ERROR,Message.ERROR);
+            return new ResponseResult(Code.ERROR,Message.ERROR);
         }
-        return new ResponseResult(Code.SUCCESS, Message.SUCCESS, new VideoDto(videoList,(int)page.getTotal()));
+        int total = (int)page.getTotal();
+        if (pageNum > total || pageSize > total || pageNum < 0 || pageSize <= 0){
+            throw  new BusinessException(Code.ERROR,Message.ERROR);
+        }
+        return new ResponseResult(Code.SUCCESS, Message.SUCCESS, new VideoDto(videoList,total));
     }
 
     /**
@@ -144,9 +144,13 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
         videoMapper.selectPage(page, lqw);
         List<Video> videoList = page.getRecords();
         if (videoList.isEmpty()) {
-            throw new BusinessException(Code.ERROR,Message.ERROR);
+            return new ResponseResult(Code.ERROR,Message.ERROR);
         }
         redisCache.setCacheObject("search:",keywords);
+        int total = (int)page.getTotal();
+        if (pageNum > total || pageSize > total || pageNum < 0 || pageSize <= 0){
+            throw  new BusinessException(Code.ERROR,Message.ERROR);
+        }
         return new ResponseResult(Code.SUCCESS, Message.SUCCESS, new VideoDto(videoList,(int)page.getTotal()));
     }
 

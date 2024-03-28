@@ -17,5 +17,5 @@ public interface InteractionService {
 
     ResponseResult commentList(String videoId, int pageNum, int pageSize);
 
-    ResponseResult commentDelete(String token, String commentId) throws Exception;
+    ResponseResult commentDelete(String commentId) throws Exception;
 }

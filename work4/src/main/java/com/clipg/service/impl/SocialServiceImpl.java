@@ -40,17 +40,14 @@ public class SocialServiceImpl implements SocialService {
         if (followerId.equals(followingId)) {
             throw new BusinessException(Code.ERROR, Message.ERROR);
         }
-        LambdaQueryWrapper<Follow> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        Follow isFollow = followMapper.selectOne(lambdaQueryWrapper.eq(Follow::getFollowerId,followerId).eq(Follow::getFollowingId,followingId));
-        if (isFollow == null){
-            throw new BusinessException(Code.ERROR,Message.ERROR);
-        }
-        if (actionType == 0){
+        LambdaQueryWrapper<Follow> lqw = new LambdaQueryWrapper<>();
+        Follow isFollow = followMapper.selectOne(lqw.eq(Follow::getFollowerId,followerId).eq(Follow::getFollowingId,followingId));
+        if (actionType == 0 && isFollow == null){
             followMapper.insert(new Follow(followerId,followingId));
-        } else if (actionType == 1) {
-            QueryWrapper queryWrapper = new QueryWrapper<>();
-            queryWrapper.eq("following_id", followingId);
-            followMapper.delete(queryWrapper);
+        } else if (actionType == 1 && isFollow != null) {
+            QueryWrapper qw = new QueryWrapper<>();
+            qw.eq("following_id", followingId);
+            followMapper.delete(qw);
         } else {
             throw new BusinessException(Code.ERROR,Message.ERROR);
         }
@@ -63,14 +60,12 @@ public class SocialServiceImpl implements SocialService {
      */
     @Override
     public ResponseResult followingList(String userId, int pageNum, int pageSize) {
-        //根据userId查找在数据库中的指定行，并获得相应列表
         LambdaQueryWrapper<Follow> lqwFollow = new LambdaQueryWrapper<>();
         List<Follow> followList = followMapper.selectList(lqwFollow.eq(Follow::getFollowerId, userId));
         List<UserDto> userList = new ArrayList<>();
         for (Follow follow : followList){
             LambdaQueryWrapper<User> lqwUser = new LambdaQueryWrapper<>();
             User user = userMapper.selectOne(lqwUser.select(User::getId,User::getUsername, User::getAvatarUrl).eq(User::getId, follow.getFollowingId()));
-            //转成UserDto信息
             UserDto userDto = new UserDto();
             userDto.setId(user.getId());
             userDto.setId(user.getUsername());
@@ -78,7 +73,7 @@ public class SocialServiceImpl implements SocialService {
             userList.add(userDto);
         }
         if (userList.isEmpty()) {
-            throw new BusinessException(Code.ERROR,Message.ERROR);
+            return new ResponseResult(Code.ERROR,Message.ERROR);
         }
         Page<UserDto> page = new Page<>(pageNum, pageSize);
         page.setRecords(userList);
@@ -107,7 +102,7 @@ public class SocialServiceImpl implements SocialService {
             userList.add(userDto);
         }
         if (userList.isEmpty()) {
-            throw new BusinessException(Code.ERROR,Message.ERROR);
+            return new ResponseResult(Code.ERROR,Message.ERROR);
         }
         Page<UserDto> page = new Page<>(pageNum, pageSize);
         page.setRecords(userList);
@@ -129,7 +124,6 @@ public class SocialServiceImpl implements SocialService {
         if (!friendIds.isEmpty()) {
             LambdaQueryWrapper<User> lqw = new LambdaQueryWrapper<>();
             List<User> userList = userMapper.selectList(lqw.in(User::getId, friendIds));
-            // 构建用户信息列表
             for (User user : userList) {
                 UserDto userDto = new UserDto();
                 userDto.setId(user.getId());
@@ -139,9 +133,15 @@ public class SocialServiceImpl implements SocialService {
             }
         }
         if (friendList.isEmpty()) {
-            throw new BusinessException(Code.ERROR,Message.ERROR);
+            return new ResponseResult(Code.ERROR,Message.ERROR);
         }
-        return new ResponseResult(Code.SUCCESS, Message.SUCCESS, new FollowDto(friendList,friendList.size()));
+        int total = friendList.size();
+        if (pageNum > total || pageSize > total || pageNum < 0 || pageSize <= 0){
+            throw  new BusinessException(Code.ERROR,Message.ERROR);
+        }
+        Page<UserDto> page = new Page<>(pageNum, pageSize);
+        page.setRecords(friendList);
+        return new ResponseResult(Code.SUCCESS, Message.SUCCESS, new FollowDto(page.getRecords(),total));
 
     }
 

@@ -23,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author 77507
@@ -61,9 +60,11 @@ public class InteractionServiceImpl implements InteractionService {
                 redisTemplate.opsForSet().add(key, userId);
                 //存入数据库
                 VideoLikes videoLikes = new VideoLikes();
-                videoLikes.setVideoId(userId);
+                videoLikes.setUserId(userId);
                 videoLikes.setVideoId(videoId);
                 likeMapper.insert(videoLikes);
+            }else {
+                return new ResponseResult(Code.ERROR, Message.ERROR);
             }
         }else if (!BooleanUtils.isFalse(isMember) && "2".equals(actionType)) {
             boolean isSuccess = videoService.update().setSql("like_count = like_count - 1").eq("id", videoId).update();
@@ -74,11 +75,13 @@ public class InteractionServiceImpl implements InteractionService {
                 LambdaQueryWrapper<VideoLikes> lqw = new LambdaQueryWrapper<>();
                 lqw.eq(VideoLikes::getUserId, userId).eq(VideoLikes::getVideoId, videoId);
                 likeMapper.delete(lqw);
+            }else {
+                return new ResponseResult(Code.ERROR, Message.ERROR);
             }
         }else {
             throw new BusinessException(Code.ERROR, Message.ERROR);
         }
-        return  new ResponseResult(Code.SUCCESS, Message.SUCCESS);
+        return new ResponseResult(Code.SUCCESS, Message.SUCCESS);
     }
 
     /**
@@ -86,30 +89,20 @@ public class InteractionServiceImpl implements InteractionService {
      */
     @Override
     public ResponseResult listVideoLikeByUserId(String userId) {
-        String keyPattern = "videoId:*:likes";
-        List<Video> videoList = new ArrayList<>();
-        // 获取所有键匹配的视频点赞集合
-        Set<String> keys = redisTemplate.keys(keyPattern);
-        // 遍历所有匹配的键
-        if(keys == null){
-            return new ResponseResult(Code.ERROR,Message.ERROR);
+        LambdaQueryWrapper<VideoLikes> lqw = new LambdaQueryWrapper<>();
+        lqw.eq(VideoLikes::getUserId,userId);
+        List<VideoLikes> videoLikesList = likeMapper.selectList(lqw);
+        List<String> videoIdList = new ArrayList<>();
+        for (VideoLikes videoLikes : videoLikesList) {
+            videoIdList.add(videoLikes.getVideoId());
         }
-        for (String key : keys) {
-            // 检查该用户是否点赞过当前视频
-            if (Boolean.TRUE.equals(redisTemplate.opsForSet().isMember(key, userId))) {
-                // 从键中提取视频ID并添加到集合中
-                String videoId = key.split(":")[1]; // 视频ID位于键的第二部分
-                QueryWrapper queryWrapper = new QueryWrapper<>();
-                queryWrapper.eq("id", videoId);
-                Video video = videoService.getOne(queryWrapper);
-                videoList.add(video);
-            }
-        }
+        LambdaQueryWrapper<Video> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.in(Video::getId, videoIdList);
+        List<Video> videoList = videoMapper.selectList(queryWrapper);
         if (videoList.isEmpty()){
             return new ResponseResult(Code.ERROR,Message.ERROR);
         }
         return new ResponseResult(Code.SUCCESS, Message.SUCCESS, new VideoDto(videoList,videoList.size()));
-
     }
 
     /**
@@ -117,7 +110,7 @@ public class InteractionServiceImpl implements InteractionService {
      */
     @Transactional
     @Override
-    public ResponseResult publishCommentToVideo(String videoId, String content) throws Exception {
+    public ResponseResult publishCommentToVideo(String videoId, String content)  {
         String userId = userHolder.getUserId();
         Comment comment = new Comment();
         comment.setUserId(userId);
@@ -133,7 +126,7 @@ public class InteractionServiceImpl implements InteractionService {
      */
     @Transactional
     @Override
-    public ResponseResult publishCommentToComment(String parentId, String content) throws Exception {
+    public ResponseResult publishCommentToComment(String parentId, String content) {
         String userId = userHolder.getUserId();
         Comment commentParent = commentMapper.selectById(parentId);
         Comment comment = new Comment();
@@ -158,12 +151,14 @@ public class InteractionServiceImpl implements InteractionService {
         qw.eq("video_id",videoId);
         commentMapper.selectPage(page, qw);
         List<Comment> commentList = page.getRecords();
-        int total = commentMapper.selectCount(qw);
         if (commentList.isEmpty()) {
-            throw new BusinessException(Code.ERROR,Message.ERROR);
+            return new ResponseResult(Code.ERROR,Message.ERROR);
         }
-        return new ResponseResult(Code.SUCCESS, Message.SUCCESS, new CommentDto(commentList,total));
-
+        int total = commentMapper.selectCount(qw);
+        if (pageNum > total || pageSize > total || pageNum < 0 || pageSize <= 0){
+            throw  new BusinessException(Code.ERROR,Message.ERROR);
+        }
+        return new ResponseResult(Code.SUCCESS, Message.SUCCESS, new CommentDto(commentList,commentMapper.selectCount(qw)));
     }
 
     /**
@@ -171,11 +166,14 @@ public class InteractionServiceImpl implements InteractionService {
      */
     @Transactional
     @Override
-    public ResponseResult commentDelete(String token, String commentId) throws Exception {
+    public ResponseResult commentDelete(String commentId){
         String userId = userHolder.getUserId();
         Comment comment = commentMapper.selectById(commentId);
+        if (comment == null){
+            return new ResponseResult(Code.ERROR,Message.ERROR);
+        }
         if (!comment.getUserId().equals(userId)){
-            throw new BusinessException(Code.ERROR,Message.ERROR);
+            return new ResponseResult(Code.ERROR,Message.ERROR);
         }
         commentMapper.deleteById(commentId);
         videoService.update().setSql("comment_count = comment_count - 1").eq("id", comment.getVideoId()).update();
@@ -185,5 +183,4 @@ public class InteractionServiceImpl implements InteractionService {
         }
         return new ResponseResult(Code.SUCCESS, Message.SUCCESS);
     }
-
 }

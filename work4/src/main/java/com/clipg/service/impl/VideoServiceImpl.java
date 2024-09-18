@@ -1,5 +1,12 @@
 package com.clipg.service.impl;
 
+import com.aliyun.oss.OSS;
+import com.aliyun.oss.OSSClientBuilder;
+import com.aliyun.oss.OSSException;
+import com.aliyun.oss.common.auth.CredentialsProviderFactory;
+import com.aliyun.oss.common.auth.EnvironmentVariableCredentialsProvider;
+import com.aliyun.oss.model.PutObjectRequest;
+import com.aliyun.oss.model.PutObjectResult;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -27,6 +34,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.*;
 
 
@@ -72,6 +81,20 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
         File dir = new File(uploadDir);
         // 创建视频文件对象
         File videoFile = new File(dir.getAbsolutePath() + File.separator + fileName);
+
+        // Endpoint以华东1（杭州）为例，其它Region请按实际情况填写。
+        String endpoint = "https://oss-cn-heyuan.aliyuncs.com";
+        String accessKeyId = "LTAI5tRJ8Xz6h5QY2XJ7Xx6G";
+        String accessKeySecret = "w8z9rX6j3f1m3y3k6h4l2i5n0j7o4q8p";
+
+        OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
+
+        InputStream inputStream = new FileInputStream(videoFile);
+        ossClient.putObject("clipg-work4-videos", fileName, inputStream);
+
+        ossClient.shutdown();
+
+
         //上传视频
         uploadVideoTask.uploadVideo(data,videoFile);
         String videoUrl = "http://localhost:8080/videos/" + fileName;

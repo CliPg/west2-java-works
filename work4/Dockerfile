@@ -1,7 +1,8 @@
 FROM openjdk:11
 
-ENV TZ=Asia/Shanghai
-RUN ln -snf /usr/share/zoneinfo/$TZ /ect/localtime && echo $TZ > /etc/timezone
+RUN /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \&& echo 'Asia/Shanghai' >/etc/timezone
+
+VOLUME /tmp
 
 COPY *.jar /app.jar
 

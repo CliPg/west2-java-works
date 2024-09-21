@@ -4,20 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="896b3186-577b-4afd-a188-9522dc10e265" name="更改" comment="vue-config-js的修改，实现跨域">
+    <list default="true" id="896b3186-577b-4afd-a188-9522dc10e265" name="更改" comment="实现登录，但还未实现保存状态">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/config/SecurityConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/controller/UserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/service/impl/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/service/impl/VideoServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/service/impl/VideoServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/config/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/clipg/config/SecurityConfig.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/clipg/controller/UserController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/service/impl/UserServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/clipg/service/impl/UserServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/service/impl/VideoServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/clipg/service/impl/VideoServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/work4-frontends/work4/vue.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/work4-frontends/work4/vue.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/work4-frontends/work4/src/components/User/Login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/work4-frontends/work4/src/components/User/Login.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -222,7 +215,7 @@
       <workItem from="1724396820398" duration="2293000" />
       <workItem from="1726655298513" duration="19732000" />
       <workItem from="1726823904745" duration="106000" />
-      <workItem from="1726881721581" duration="4673000" />
+      <workItem from="1726881721581" duration="10867000" />
     </task>
     <task id="LOCAL-00001" summary="原版">
       <option name="closed" value="true" />
@@ -248,7 +241,23 @@
       <option name="project" value="LOCAL" />
       <updated>1726886791202</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="9-21-10:51版本，这是未实现前端跨域的的版本">
+      <option name="closed" value="true" />
+      <created>1726887104586</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1726887104586</updated>
+    </task>
+    <task id="LOCAL-00005" summary="实现登录，但还未实现保存状态">
+      <option name="closed" value="true" />
+      <created>1726892204107</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1726892204107</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -269,7 +278,9 @@
     <MESSAGE value="原版" />
     <MESSAGE value="修改video实现" />
     <MESSAGE value="vue-config-js的修改，实现跨域" />
-    <option name="LAST_COMMIT_MESSAGE" value="vue-config-js的修改，实现跨域" />
+    <MESSAGE value="9-21-10:51版本，这是未实现前端跨域的的版本" />
+    <MESSAGE value="实现登录，但还未实现保存状态" />
+    <option name="LAST_COMMIT_MESSAGE" value="实现登录，但还未实现保存状态" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

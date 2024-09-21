@@ -14,6 +14,7 @@ import java.io.IOException;
  */
 @RestController
 @RequestMapping("/user")
+@CrossOrigin(origins = "http://localhost:8081")
 public class UserController {
 
     @Autowired

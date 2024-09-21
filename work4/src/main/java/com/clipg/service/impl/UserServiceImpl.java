@@ -9,6 +9,7 @@ import com.clipg.dto.LoginDto;
 import com.clipg.dto.Message;
 import com.clipg.dto.UserDto;
 import com.clipg.exception.BusinessException;
+import com.clipg.filter.LogFilter;
 import com.clipg.mapper.UserMapper;
 import com.clipg.entity.LoginUser;
 import com.clipg.dto.ResponseResult;
@@ -17,6 +18,8 @@ import com.clipg.service.UserService;
 import com.clipg.util.JwtUtil;
 import com.clipg.util.RedisCache;
 import com.clipg.util.UserHolder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -51,6 +54,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Autowired
     private UserHolder userHolder;
 
+    private static final Logger LOG = LoggerFactory.getLogger(LogFilter.class);
+
     /**
      * 根据post请求参数进行登录
      */
@@ -59,8 +64,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         // AuthenticationManager的authenticate方法进行用户认证
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(dto.getUsername(), dto.getPassword());
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
+        LOG.info("正在登录");
         // 如果认证没通过，给出对应提示
         if (Objects.isNull(authenticate)) {
+            LOG.info("认证不通过");
             return new ResponseResult(Code.ERROR, Message.ERROR);
         }
         // 如果认证通过了，使用UUID(用户ID)生成JWT

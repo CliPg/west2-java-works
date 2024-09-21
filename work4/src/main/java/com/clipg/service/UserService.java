@@ -13,6 +13,7 @@ import java.io.IOException;
 public interface UserService extends IService<User> {
 
     ResponseResult login(User user);
+  ResponseResult logout();
     ResponseResult register(User user);
     ResponseResult userInfo(String id);
     ResponseResult avatarUpload(MultipartFile file) throws IOException;

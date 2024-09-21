@@ -4,6 +4,8 @@ import com.clipg.entity.LoginUser;
 import com.clipg.util.JwtUtil;
 import com.clipg.util.RedisCache;
 import io.jsonwebtoken.Claims;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,7 +18,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.Objects;
+
+
+
 
 /**
  * @author 77507
@@ -27,10 +33,15 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     @Autowired
     private RedisCache redisCache;
 
+    private static final Logger LOG = LoggerFactory.getLogger(LogFilter.class);
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         // 获取token
-        String token = request.getHeader("token");
+        String token = request.getHeader("Authorization");
+        if (token != null && token.startsWith("Bearer ")) {
+            token = token.substring(7); // 去掉 "Bearer " 前缀
+        }
         // token是空则放行
         if (!StringUtils.hasText(token)) {
             //放行
@@ -43,6 +54,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         try {
             Claims claims = JwtUtil.parseJwt(token);
             userid = claims.getSubject();
+            LOG.info(userid);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("token过期！");

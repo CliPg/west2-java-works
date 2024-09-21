@@ -24,9 +24,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -78,6 +80,27 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         redisCache.setCacheObject("login:" + userid,loginUser);
         return new ResponseResult(Code.SUCCESS, Message.SUCCESS, new LoginDto(token));
     }
+
+    @Override
+    public ResponseResult logout() {
+
+        // 获取当前登录用户的认证信息
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+
+        // 从登录用户中获取用户ID
+        String userId = loginUser.getUser().getId();
+
+        // 从 Redis 中删除对应的登录信息
+        redisCache.deleteObject("login:" + userId);
+
+        // 清除 Spring Security 上下文中的用户信息
+        SecurityContextHolder.clearContext();
+
+        // 返回退出登录成功的结果
+        return new ResponseResult(Code.SUCCESS, Message.SUCCESS);
+    }
+
 
     /**
      * 根据post请求参数进行注册
@@ -134,6 +157,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         String id = userHolder.getUserId();
         // 获取上传文件的原始文件名
         String originalFilename = data.getOriginalFilename();
+        System.out.println(originalFilename);
         // 获取文件后缀
         String fileExtension = getFileExtension(originalFilename);
         // 仅保留图片文件

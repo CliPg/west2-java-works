@@ -25,6 +25,11 @@ public class UserController {
         return userService.login(user);
     }
 
+    @PostMapping("/logout")
+    public ResponseResult logout() {
+        return userService.logout();  // 调用 service 的登出方法
+    }
+
     @PostMapping("/register")
     public ResponseResult register(@RequestBody User user){
         return userService.register(user);
@@ -36,7 +41,7 @@ public class UserController {
     }
 
     @PostMapping("/avatar/upload")
-    public ResponseResult avatarUpload(@RequestParam("data")MultipartFile file) throws IOException {
+    public ResponseResult avatarUpload(@RequestParam("avatar")MultipartFile file) throws IOException {
         return userService.avatarUpload(file);
     }
 }

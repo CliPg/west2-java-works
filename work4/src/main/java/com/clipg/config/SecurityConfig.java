@@ -36,6 +36,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 // CSRF禁用，因为不使用session
+                .cors().and()
                 .csrf().disable()
                 // 不通过Session获取SecurityContext
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -43,7 +44,6 @@ public class SecurityConfig {
                 // 过滤请求
                 .authorizeRequests()
                 // 对于登录接口 允许匿名访问
-                .antMatchers("/user").anonymous()
                 .antMatchers("/user/login").anonymous()
                 .antMatchers("/user/register").anonymous()
                 // 除上面外的所有请求全部需要鉴权认证

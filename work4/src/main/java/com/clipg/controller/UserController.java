@@ -34,7 +34,7 @@ public class UserController {
         return userService.userInfo(id);
     }
 
-    @PutMapping("/avatar/upload")
+    @PostMapping("/avatar/upload")
     public ResponseResult avatarUpload(@RequestParam("data")MultipartFile file) throws IOException {
         return userService.avatarUpload(file);
     }

@@ -75,28 +75,21 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
         }
         // 生成视频文件名
         String fileName = UUID.randomUUID() + "." + fileExtension;
-        // 指定视频保存路径
-        String uploadDir = "D:\\cs学习";
-        // 创建保存视频文件的目录
-        File dir = new File(uploadDir);
-        // 创建视频文件对象
-        File videoFile = new File(dir.getAbsolutePath() + File.separator + fileName);
 
-        // Endpoint以华东1（杭州）为例，其它Region请按实际情况填写。
         String endpoint = "https://oss-cn-heyuan.aliyuncs.com";
-        String accessKeyId = "LTAI5tRJ8Xz6h5QY2XJ7Xx6G";
-        String accessKeySecret = "w8z9rX6j3f1m3y3k6h4l2i5n0j7o4q8p";
+        String accessKeyId = "LTAI5tKES8FuAWyx66hLM8um";
+        String accessKeySecret = "14fausF8C3PuUemkQSgEeiLjEGq2Hy";
 
         OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
 
-        InputStream inputStream = new FileInputStream(videoFile);
+        InputStream inputStream = data.getInputStream();
         ossClient.putObject("clipg-work4-videos", fileName, inputStream);
 
         ossClient.shutdown();
 
 
         //上传视频
-        uploadVideoTask.uploadVideo(data,videoFile);
+        //uploadVideoTask.uploadVideo(data,videoFile);
         String videoUrl = "http://localhost:8080/videos/" + fileName;
         String cover = UUID.randomUUID() + ".jpg";
         String coverUrl = "http://localhost:8080/videos/" + cover;

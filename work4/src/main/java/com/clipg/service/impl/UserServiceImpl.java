@@ -1,5 +1,7 @@
 package com.clipg.service.impl;
 
+import com.aliyun.oss.OSS;
+import com.aliyun.oss.OSSClientBuilder;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.clipg.dto.Code;
@@ -26,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Objects;
@@ -130,16 +133,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (!Arrays.asList("jpg", "png", "gif").contains(fileExtension.toLowerCase())) {
             throw new BusinessException(Code.ERROR,Message.ERROR);
         }
-        // 生成图片文件名
+
         String fileName = UUID.randomUUID() + "." + fileExtension;
-        // 指定图片保存路径
-        String uploadDir = "D:\\cs学习";
-        // 创建保存图片文件的目录
-        File dir = new File(uploadDir);
-        // 创建图片文件对象
-        File videoFile = new File(dir.getAbsolutePath() + File.separator + fileName);
-        //上传图片
-        data.transferTo(videoFile);
+
+        String endpoint = "https://oss-cn-heyuan.aliyuncs.com";
+        String accessKeyId = "LTAI5tKES8FuAWyx66hLM8um";
+        String accessKeySecret = "14fausF8C3PuUemkQSgEeiLjEGq2Hy";
+
+        OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
+
+        InputStream inputStream = data.getInputStream();
+        ossClient.putObject("clipg-work4-videos", fileName, inputStream);
+
+        ossClient.shutdown();
+
         String avatarUrl = "http://localhost:8080/avatar/upload" + fileName;
         //上传头像
         User user = userMapper.selectById(id);

@@ -4,15 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="896b3186-577b-4afd-a188-9522dc10e265" name="更改" comment="">
+    <list default="true" id="896b3186-577b-4afd-a188-9522dc10e265" name="更改" comment="vue-config-js的修改，实现跨域">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/service/impl/VideoServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/service/impl/VideoServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-com.clipg.Work4ApplicationTests.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.clipg.Work4ApplicationTests.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/com.clipg.Work4ApplicationTests.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/com.clipg.Work4ApplicationTests.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/work4-0.0.1-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/work4-0.0.1-SNAPSHOT.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/work4-0.0.1-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/target/work4-0.0.1-SNAPSHOT.jar.original" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/config/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/clipg/config/SecurityConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/clipg/controller/UserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/service/impl/UserServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/clipg/service/impl/UserServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/service/impl/VideoServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/clipg/service/impl/VideoServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/work4-frontends/work4/vue.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/work4-frontends/work4/vue.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +66,7 @@
     "WebServerToolWindowFactoryState": "false",
     "extract.method.default.visibility": "private",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "D:/cs_study/west2-java-work/work4",
+    "last_opened_file_path": "D:/cs_study/JAVA/projects/shuatiya",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -72,6 +77,7 @@
     "project.structure.side.proportion": "0.5149425",
     "settings.editor.selected.configurable": "preferences.pluginManager",
     "spring.configuration.checksum": "34bde5322f33f04bac567e6a889da99f",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2023.2.1\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -214,8 +220,35 @@
       <workItem from="1723824222519" duration="635000" />
       <workItem from="1723990637441" duration="1398000" />
       <workItem from="1724396820398" duration="2293000" />
-      <workItem from="1726655298513" duration="2320000" />
+      <workItem from="1726655298513" duration="19732000" />
+      <workItem from="1726823904745" duration="106000" />
+      <workItem from="1726881721581" duration="4673000" />
     </task>
+    <task id="LOCAL-00001" summary="原版">
+      <option name="closed" value="true" />
+      <created>1726659597053</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1726659597053</updated>
+    </task>
+    <task id="LOCAL-00002" summary="修改video实现">
+      <option name="closed" value="true" />
+      <created>1726663940229</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1726663940229</updated>
+    </task>
+    <task id="LOCAL-00003" summary="vue-config-js的修改，实现跨域">
+      <option name="closed" value="true" />
+      <created>1726886791202</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1726886791202</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -231,6 +264,12 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="原版" />
+    <MESSAGE value="修改video实现" />
+    <MESSAGE value="vue-config-js的修改，实现跨域" />
+    <option name="LAST_COMMIT_MESSAGE" value="vue-config-js的修改，实现跨域" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

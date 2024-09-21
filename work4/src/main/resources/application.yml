@@ -1,6 +1,7 @@
 spring:
   datasource:
-    url: jdbc:mysql://47.121.204.175:3306/bullet_screen_video_website
+    #url: jdbc:mysql://47.121.204.175:3306/bullet_screen_video_website
+    url: jdbc:mysql://localhost:3306/bullet_screen_video_website
     username: root
     password: LHSqaz123
     driver-class-name: com.mysql.cj.jdbc.Driver

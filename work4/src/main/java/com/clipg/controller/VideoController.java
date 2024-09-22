@@ -17,7 +17,7 @@ public class VideoController {
     private VideoService videoService;
 
     @PostMapping("/publish")
-    public ResponseResult publishVideo(@RequestParam("data") MultipartFile data,
+    public ResponseResult publishVideo(@RequestParam("video") MultipartFile data,
                                        @RequestParam("title") String title,
                                        @RequestParam("description") String description) throws Exception {
         return videoService.publishVideo(data, title, description);

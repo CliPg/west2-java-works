@@ -90,7 +90,7 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
 
         //上传视频
         //uploadVideoTask.uploadVideo(data,videoFile);
-        String videoUrl = "http://localhost:8080/videos/" + fileName;
+        String videoUrl = "https://clipg-work4-videos.oss-cn-heyuan.aliyuncs.com/" + fileName;
         String cover = UUID.randomUUID() + ".jpg";
         String coverUrl = "http://localhost:8080/videos/" + cover;
         //设置视频信息
@@ -148,6 +148,9 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
      */
     @Override
     public ResponseResult searchByKeyword(String keywords, int pageNum, int pageSize) {
+        System.out.println(keywords);
+        System.out.println(pageNum);
+        System.out.println(pageSize);
         String userId = userHolder.getUserId();
         LambdaQueryWrapper<Video> lqw = new LambdaQueryWrapper<>();
         //按照点击量排序
@@ -158,9 +161,9 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
         IPage<Video> videoPage = videoMapper.selectPage(page, lqw);
         List<Video> videoList = videoPage.getRecords();
         int total = (int) videoPage.getTotal(); // 获取总记录数
-        if (pageNum > total || pageSize > total){
-            throw  new BusinessException(Code.ERROR,Message.ERROR);
-        }
+//        if (pageNum > total || pageSize > total){
+//            throw  new BusinessException(Code.ERROR,Message.ERROR);
+//        }
         if (videoList.isEmpty()) {
             return new ResponseResult(Code.ERROR, Message.ERROR);
         }

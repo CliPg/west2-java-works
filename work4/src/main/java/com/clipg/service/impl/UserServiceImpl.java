@@ -118,8 +118,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
         user.setCreateTime(new Date());
         userMapper.insert(user);
-        //存入redis
-        redisCache.setCacheObject("register:" + user.getId(), user);
+        //存入redis 目前感觉没什么必要
+        //redisCache.setCacheObject("register:" + user.getId(), user);
         return new ResponseResult(Code.SUCCESS, Message.SUCCESS);
 
     }
@@ -170,16 +170,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         String endpoint = "https://oss-cn-heyuan.aliyuncs.com";
         String accessKeyId = "LTAI5tKES8FuAWyx66hLM8um";
         String accessKeySecret = "14fausF8C3PuUemkQSgEeiLjEGq2Hy";
-
         OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
-
         InputStream inputStream = data.getInputStream();
         ossClient.putObject("clipg-work4-videos", fileName, inputStream);
-
         ossClient.shutdown();
 
-        String avatarUrl = "http://localhost:8080/avatar/upload" + fileName;
         //上传头像
+        String avatarUrl = "http://localhost:8080/avatar/upload" + fileName;
         User user = userMapper.selectById(id);
         if (user == null){
             throw new BusinessException(Code.ERROR,Message.ERROR);

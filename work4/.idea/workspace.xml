@@ -4,13 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="896b3186-577b-4afd-a188-9522dc10e265" name="更改" comment="完成用户模块">
+    <list default="true" id="896b3186-577b-4afd-a188-9522dc10e265" name="更改" comment="基本完成">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/controller/VideoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/controller/VideoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/service/impl/UserServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/service/impl/VideoServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/service/impl/VideoServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/controller/VideoController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/clipg/controller/VideoController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/filter/JwtAuthenticationTokenFilter.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/clipg/filter/JwtAuthenticationTokenFilter.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/service/impl/VideoServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/clipg/service/impl/VideoServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/task/UploadVideoTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/task/UploadVideoTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/clipg/controller/UserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/work4-frontends/work4/src/components/User/Login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/work4-frontends/work4/src/components/User/Login.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,6 +75,11 @@
     "spring.configuration.checksum": "34bde5322f33f04bac567e6a889da99f",
     "ts.external.directory.path": "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2023.2.1\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
+    ]
   }
 }]]></component>
   <component name="ReactorSettings">
@@ -215,7 +223,10 @@
       <workItem from="1724396820398" duration="2293000" />
       <workItem from="1726655298513" duration="19732000" />
       <workItem from="1726823904745" duration="106000" />
-      <workItem from="1726881721581" duration="40586000" />
+      <workItem from="1726881721581" duration="50835000" />
+      <workItem from="1727224852823" duration="25000" />
+      <workItem from="1728804552768" duration="624000" />
+      <workItem from="1729247229445" duration="21318000" />
     </task>
     <task id="LOCAL-00001" summary="原版">
       <option name="closed" value="true" />
@@ -273,7 +284,15 @@
       <option name="project" value="LOCAL" />
       <updated>1726918953608</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="基本完成">
+      <option name="closed" value="true" />
+      <created>1726967956677</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1726967956677</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -298,7 +317,8 @@
     <MESSAGE value="实现登录，但还未实现保存状态" />
     <MESSAGE value="实现登录，并实现保存状态" />
     <MESSAGE value="完成用户模块" />
-    <option name="LAST_COMMIT_MESSAGE" value="完成用户模块" />
+    <MESSAGE value="基本完成" />
+    <option name="LAST_COMMIT_MESSAGE" value="基本完成" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

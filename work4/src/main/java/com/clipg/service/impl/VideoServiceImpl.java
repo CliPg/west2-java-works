@@ -37,6 +37,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -64,32 +65,20 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
     @Transactional
     @Override
     public ResponseResult publishVideo(MultipartFile data, String title, String description) throws Exception {
-        String userId = userHolder.getUserId();
         // 获取上传文件的原始文件名
         String originalFilename = data.getOriginalFilename();
         // 获取文件后缀
         String fileExtension = getFileExtension(originalFilename);
         // 仅保留视频文件
         if (!Arrays.asList("mp4", "mov", "avi", "mkv", "wmv", "flv", "webm", "m4v", "3gp").contains(fileExtension.toLowerCase())) {
-            throw new BusinessException(Code.ERROR,Message.ERROR);
+            throw new BusinessException(Code.ERROR, Message.ERROR);
         }
         // 生成视频文件名
         String fileName = UUID.randomUUID() + "." + fileExtension;
+        // 异步处理视频上传
+        uploadVideoTask.uploadVideo(data, fileName);
 
-        String endpoint = "https://oss-cn-heyuan.aliyuncs.com";
-        String accessKeyId = "LTAI5tKES8FuAWyx66hLM8um";
-        String accessKeySecret = "14fausF8C3PuUemkQSgEeiLjEGq2Hy";
-
-        OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
-
-        InputStream inputStream = data.getInputStream();
-        ossClient.putObject("clipg-work4-videos", fileName, inputStream);
-
-        ossClient.shutdown();
-
-
-        //上传视频
-        //uploadVideoTask.uploadVideo(data,videoFile);
+        String userId = userHolder.getUserId();
         String videoUrl = "https://clipg-work4-videos.oss-cn-heyuan.aliyuncs.com/" + fileName;
         String cover = UUID.randomUUID() + ".jpg";
         String coverUrl = "http://localhost:8080/videos/" + cover;
@@ -122,6 +111,7 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
         return fileExtension;
     }
 
+
     /**
      * 根据 userId 查看指定人的发布列表
      */
@@ -146,30 +136,46 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
     /**
      * 根据关键字搜索视频
      */
+
     @Override
     public ResponseResult searchByKeyword(String keywords, int pageNum, int pageSize) {
-        System.out.println(keywords);
-        System.out.println(pageNum);
-        System.out.println(pageSize);
         String userId = userHolder.getUserId();
+        String limitKey = "search_limit:" + userId;
+
+        // 获取当前请求的计数
+        Integer currentCount = (Integer) redisTemplate.opsForValue().get(limitKey);
+        if (currentCount == null) {
+            // 设置初始计数为1，并设置过期时间为1分钟
+            redisTemplate.opsForValue().set(limitKey, 1, 1, TimeUnit.MINUTES);
+        } else if (currentCount >= 10) {
+            // 如果请求次数超过10次，返回限流错误
+            return new ResponseResult(Code.ERROR, "请求过于频繁，请稍后再试。");
+        } else {
+            // 使用 RedisTemplate 进行计数器自增
+            redisTemplate.opsForValue().increment(limitKey);
+        }
+
         LambdaQueryWrapper<Video> lqw = new LambdaQueryWrapper<>();
-        //按照点击量排序
-        if (keywords != null){
-            lqw.like(Video::getTitle, keywords).or().like(Video::getDescription, keywords).orderByDesc(Video::getVisitCount);
+        if (keywords != null) {
+            lqw.like(Video::getTitle, keywords)
+                    .or()
+                    .like(Video::getDescription, keywords)
+                    .orderByDesc(Video::getVisitCount);
         }
         Page<Video> page = new Page<>(pageNum, pageSize);
         IPage<Video> videoPage = videoMapper.selectPage(page, lqw);
         List<Video> videoList = videoPage.getRecords();
-        int total = (int) videoPage.getTotal(); // 获取总记录数
-//        if (pageNum > total || pageSize > total){
-//            throw  new BusinessException(Code.ERROR,Message.ERROR);
-//        }
+        int total = (int) videoPage.getTotal();
+
         if (videoList.isEmpty()) {
             return new ResponseResult(Code.ERROR, Message.ERROR);
         }
-        redisCache.setCacheObject("search:" + keywords, userId);
+
+        redisTemplate.opsForValue().set("search:" + keywords, userId);
         return new ResponseResult(Code.SUCCESS, Message.SUCCESS, new VideoDto(page.getRecords(), total));
     }
+
+
 
 
     /**

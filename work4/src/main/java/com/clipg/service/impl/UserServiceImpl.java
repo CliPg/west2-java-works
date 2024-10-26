@@ -167,9 +167,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
         String fileName = UUID.randomUUID() + "." + fileExtension;
 
-        String endpoint = "https://oss-cn-heyuan.aliyuncs.com";
-        String accessKeyId = "LTAI5tKES8FuAWyx66hLM8um";
-        String accessKeySecret = "14fausF8C3PuUemkQSgEeiLjEGq2Hy";
+        String endpoint = "";
+        String accessKeyId = "";
+        String accessKeySecret = "";
         OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
         InputStream inputStream = data.getInputStream();
         ossClient.putObject("clipg-work4-videos", fileName, inputStream);

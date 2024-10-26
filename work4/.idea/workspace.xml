@@ -6,14 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="896b3186-577b-4afd-a188-9522dc10e265" name="更改" comment="基本完成">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/service/impl/UserServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/service/impl/VideoServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/service/impl/VideoServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/clipg/task/UploadVideoTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/clipg/task/UploadVideoTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/clipg/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/clipg/controller/UserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/work4-frontends/work4/src/components/User/Login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/work4-frontends/work4/src/components/User/Login.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -226,7 +219,7 @@
       <workItem from="1726881721581" duration="50835000" />
       <workItem from="1727224852823" duration="25000" />
       <workItem from="1728804552768" duration="624000" />
-      <workItem from="1729247229445" duration="21318000" />
+      <workItem from="1729247229445" duration="22238000" />
     </task>
     <task id="LOCAL-00001" summary="原版">
       <option name="closed" value="true" />

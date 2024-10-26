@@ -79,7 +79,9 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
         uploadVideoTask.uploadVideo(data, fileName);
 
         String userId = userHolder.getUserId();
-
+        String videoUrl = "https://clipg-work4-videos.oss-cn-heyuan.aliyuncs.com/" + fileName;
+        String cover = UUID.randomUUID() + ".jpg";
+        String coverUrl = "http://localhost:8080/videos/" + cover;
         //设置视频信息
         Video video = new Video();
         video.setUserId(userId);
